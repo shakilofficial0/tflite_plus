@@ -23,12 +23,11 @@
 ## 📋 Table of Contents
 
 - [✨ Features](#-features)
-- [🚀 Quick Start](#-quick-start)
+- [🚀 Quick Start](#-quick-start-ffi-interpreter-api)
 - [📦 Installation](#-installation)
 - [⚙️ Platform Setup](#️-platform-setup)
-- [📚 Available Functions](#-available-functions)
-- [🎯 Usage Examples](#-usage-examples)
-- [📊 Parameter Tables](#-parameter-tables)
+- [📚 Public API](#-public-api-high-level)
+- [🎯 Usage Examples](#-usage-examples-interpreter)
 - [🔧 Advanced Configuration](#-advanced-configuration)
 - [⚡ Performance Tips](#-performance-tips)
 - [🛠️ Troubleshooting](#️-troubleshooting)
@@ -260,52 +259,75 @@ The new API is lower-level and works directly with typed buffers (Float32List, U
 ### GPU Acceleration
 
 ```dart
-// Enable GPU acceleration
-await TflitePlus.loadModel(
-  model: 'assets/models/model.tflite',
-  useGpuDelegate: true,  // Android: GPU, iOS: Metal
-  numThreads: 1,
-);
+import 'dart:io' show Platform;
+import 'package:tflite_plus/tflite_plus.dart';
 
-// Check GPU availability
-final delegates = await TflitePlus.getAvailableDelegates();
-final hasGpu = delegates?.contains('GPU') ?? false;
+// Create interpreter with GPU delegate
+final options = InterpreterOptions();
+if (Platform.isAndroid) {
+  options.addDelegate(GpuDelegate());
+} else if (Platform.isIOS) {
+  options.addDelegate(MetalDelegate());
+}
+
+final interpreter = await Interpreter.fromAsset(
+  'assets/models/model.tflite', 
+  options: options,
+);
 ```
 
-### NNAPI/CoreML Acceleration
+### NNAPI/CoreML Acceleration  
 
 ```dart
 // Enable NNAPI (Android) / CoreML (iOS)
-await TflitePlus.loadModel(
-  model: 'assets/models/model.tflite',
-  useNnApiDelegate: true,
-  numThreads: 1,
+final options = InterpreterOptions();
+if (Platform.isAndroid) {
+  // NNAPI delegate (Android)
+  options.addDelegate(XNNPackDelegate());
+} else if (Platform.isIOS) {
+  // CoreML delegate (iOS) 
+  options.addDelegate(CoreMLDelegate());
+}
+
+final interpreter = await Interpreter.fromAsset(
+  'assets/models/model.tflite',
+  options: options,
 );
 ```
 
 ### Thread Configuration
 
 ```dart
+import 'dart:io' show Platform;
+import 'dart:math' as math;
+
 // Optimize for different devices
 final numCores = Platform.numberOfProcessors;
-await TflitePlus.loadModel(
-  model: 'assets/models/model.tflite',
-  numThreads: math.min(numCores, 4), // Use up to 4 threads
+final options = InterpreterOptions()
+  ..threads = math.min(numCores, 4); // Use up to 4 threads
+
+final interpreter = await Interpreter.fromAsset(
+  'assets/models/model.tflite',
+  options: options,
 );
 ```
 
-### Binary Data Processing
+### Working with Raw Tensor Data
 
 ```dart
-// Process image bytes directly
-final imageBytes = await file.readAsBytes();
-final results = await TflitePlus.runModelOnBinary(
-  bytesList: imageBytes,
-  imageHeight: 224,
-  imageWidth: 224,
-  numResults: 5,
-  threshold: 0.1,
-);
+// Access input/output tensors directly  
+final interpreter = await Interpreter.fromAsset('assets/models/model.tflite');
+
+// Get input tensor info
+final inputTensor = interpreter.getInputTensor(0);
+print('Input shape: ${inputTensor.shape}');
+print('Input type: ${inputTensor.type}');
+
+// Get output tensor info
+final outputTensor = interpreter.getOutputTensor(0);
+print('Output shape: ${outputTensor.shape}');
+
+interpreter.close();
 ```
 
 ---
@@ -326,11 +348,11 @@ tflite_model = converter.convert()
 
 ### 📱 Best Practices
 
-1. **Use GPU Acceleration**: 2-4x faster inference on supported devices
-2. **Quantize Models**: Reduce size and improve speed
-3. **Batch Processing**: Process multiple images together
-4. **Image Preprocessing**: Resize to model input size
-5. **Resource Management**: Always call `close()` when done
+1. **Use Hardware Delegates**: GPU/Metal delegates provide 2-4x faster inference
+2. **Quantize Models**: INT8 quantized models are smaller and faster
+3. **Optimize Thread Usage**: Use multiple threads but don't exceed CPU cores
+4. **Proper Tensor Management**: Reuse tensors when possible, call `close()` when done
+5. **Preprocess Efficiently**: Resize images to exact model input dimensions
 
 ### ⚙️ Performance Benchmarks
 
@@ -356,16 +378,20 @@ flutter:
     - assets/models/
 ```
 
-#### GPU Delegate Not Available
+#### GPU Delegate Issues
 
 ```dart
 // ❌ Problem: GPU acceleration fails
-// ✅ Solution: Check device compatibility
-final delegates = await TflitePlus.getAvailableDelegates();
-if (delegates?.contains('GPU') == true) {
-  // GPU available
-} else {
-  // Use CPU fallback
+// ✅ Solution: Handle delegate errors gracefully
+try {
+  final options = InterpreterOptions();
+  if (Platform.isAndroid) {
+    options.addDelegate(GpuDelegate());
+  }
+  final interpreter = await Interpreter.fromAsset('model.tflite', options: options);
+} catch (e) {
+  // Fallback to CPU-only interpreter
+  final interpreter = await Interpreter.fromAsset('model.tflite');
 }
 ```
 
@@ -374,11 +400,11 @@ if (delegates?.contains('GPU') == true) {
 ```dart
 // ❌ Problem: Out of memory
 // ✅ Solution: Resource management
-await TflitePlus.close(); // Always clean up
+interpreter.close(); // Always clean up when done
 
 // Process smaller batches
-// Use quantized models
-// Reduce image resolution
+// Use quantized models  
+// Reduce input tensor sizes
 ```
 
 #### Inference Too Slow
@@ -386,10 +412,16 @@ await TflitePlus.close(); // Always clean up
 ```dart
 // ❌ Problem: Slow inference
 // ✅ Solution: Optimization strategies
-await TflitePlus.loadModel(
-  model: 'assets/models/model_quantized.tflite', // Use quantized model
-  useGpuDelegate: true,      // Enable GPU
-  numThreads: 4,            // Use multiple threads
+final options = InterpreterOptions()
+  ..threads = 4;                    // Use multiple threads
+  
+if (Platform.isAndroid) {
+  options.addDelegate(GpuDelegate()); // Enable GPU
+}
+
+final interpreter = await Interpreter.fromAsset(
+  'assets/models/model_quantized.tflite', // Use quantized model
+  options: options,
 );
 ```
 
@@ -397,145 +429,109 @@ await TflitePlus.loadModel(
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| `Model not loaded` | No model loaded | Call `loadModel()` first |
-| `Invalid image path` | File doesn't exist | Check file path |
-| `GPU delegate failed` | GPU not available | Use CPU fallback |
-| `Out of memory` | Insufficient RAM | Use smaller models/images |
+| `ArgumentError` | Invalid model file or corrupt data | Check model file path and integrity |
+| `StateError` | Interpreter not allocated | Call `allocateTensors()` or ensure model is loaded |
+| `RangeError` | Invalid tensor index | Check tensor indices with `getInputTensors().length` |
+| `Out of memory` | Insufficient RAM | Use smaller models/reduce batch size |
 
 ---
 
 ## 🧪 Complete Examples
 
-### Real-time Camera Classification
+### Basic Image Classification with File Input
 
 ```dart
-class CameraClassifier extends StatefulWidget {
-  @override
-  _CameraClassifierState createState() => _CameraClassifierState();
-}
+import 'dart:typed_data';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:tflite_plus/tflite_plus.dart';
+import 'package:image/image.dart' as img;
 
-class _CameraClassifierState extends State<CameraClassifier> {
-  CameraController? _controller;
-  List<dynamic>? _results;
-  bool _isDetecting = false;
+class ImageClassifier {
+  Interpreter? _interpreter;
+  List<String>? _labels;
 
-  @override
-  void initState() {
-    super.initState();
-    _initializeCamera();
-    _loadModel();
-  }
-
-  Future<void> _loadModel() async {
-    await TflitePlus.loadModel(
-      model: 'assets/models/mobilenet.tflite',
-      labels: 'assets/models/labels.txt',
-      useGpuDelegate: true,
-    );
-  }
-
-  Future<void> _initializeCamera() async {
-    final cameras = await availableCameras();
-    _controller = CameraController(cameras[0], ResolutionPreset.medium);
-    await _controller!.initialize();
+  Future<void> loadModel() async {
+    // Load the interpreter
+    _interpreter = await Interpreter.fromAsset('assets/models/mobilenet.tflite');
     
-    _controller!.startImageStream((image) {
-      if (!_isDetecting) {
-        _isDetecting = true;
-        _runInference(image);
+    // Load labels
+    final labelData = await rootBundle.loadString('assets/models/labels.txt');
+    _labels = labelData.split('\n');
+  }
+
+  Future<List<Map<String, dynamic>>> classifyImage(String imagePath) async {
+    if (_interpreter == null) throw StateError('Model not loaded');
+
+    // Load and preprocess image
+    final imageFile = File(imagePath);
+    final imageBytes = await imageFile.readAsBytes();
+    final image = img.decodeImage(imageBytes)!;
+    
+    // Resize to model input size (224x224 for MobileNet)
+    final resized = img.copyResize(image, width: 224, height: 224);
+    
+    // Convert to Float32List and normalize
+    final input = Float32List(1 * 224 * 224 * 3);
+    var index = 0;
+    for (int y = 0; y < 224; y++) {
+      for (int x = 0; x < 224; x++) {
+        final pixel = resized.getPixel(x, y);
+        input[index++] = (img.getRed(pixel) - 127.5) / 127.5;
+        input[index++] = (img.getGreen(pixel) - 127.5) / 127.5; 
+        input[index++] = (img.getBlue(pixel) - 127.5) / 127.5;
       }
-    });
-    
-    setState(() {});
-  }
-
-  Future<void> _runInference(CameraImage image) async {
-    // Convert CameraImage to file or bytes
-    final results = await TflitePlus.runModelOnBinary(
-      bytesList: _imageToByteList(image),
-      imageHeight: image.height,
-      imageWidth: image.width,
-    );
-    
-    setState(() {
-      _results = results;
-      _isDetecting = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_controller?.value.isInitialized != true) {
-      return CircularProgressIndicator();
     }
-
-    return Scaffold(
-      body: Stack(
-        children: [
-          CameraPreview(_controller!),
-          Positioned(
-            bottom: 100,
-            left: 20,
-            right: 20,
-            child: Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                children: _results?.map((result) => Text(
-                  '${result['label']}: ${(result['confidence'] * 100).toInt()}%',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                )).toList() ?? [Text('No results', style: TextStyle(color: Colors.white))],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    
+    // Run inference
+    final output = List.filled(1001, 0.0);
+    _interpreter!.run(input, output);
+    
+    // Convert to results
+    final results = <Map<String, dynamic>>[];
+    for (int i = 0; i < output.length; i++) {
+      results.add({
+        'index': i,
+        'label': i < _labels!.length ? _labels![i] : 'Unknown',
+        'confidence': output[i],
+      });
+    }
+    
+    // Sort by confidence and return top 5
+    results.sort((a, b) => b['confidence'].compareTo(a['confidence']));
+    return results.take(5).toList();
   }
 
-  @override
   void dispose() {
-    _controller?.dispose();
-    TflitePlus.close();
-    super.dispose();
+    _interpreter?.close();
   }
 }
 ```
 
-### Batch Image Processing
+### Batch Processing with Progress Tracking
 
 ```dart
-class BatchProcessor {
+class BatchImageProcessor {
   static Future<List<Map<String, dynamic>>> processImages(
     List<String> imagePaths,
+    {Function(int, int)? onProgress}
   ) async {
-    await TflitePlus.loadModel(
-      model: 'assets/models/classifier.tflite',
-      labels: 'assets/models/labels.txt',
-      useGpuDelegate: true,
-    );
+    final classifier = ImageClassifier();
+    await classifier.loadModel();
 
     final results = <Map<String, dynamic>>[];
     
     for (int i = 0; i < imagePaths.length; i++) {
       try {
-        final result = await TflitePlus.runModelOnImage(
-          path: imagePaths[i],
-          numResults: 1,
-          threshold: 0.1,
-        );
+        final predictions = await classifier.classifyImage(imagePaths[i]);
         
         results.add({
           'path': imagePaths[i],
-          'predictions': result,
+          'predictions': predictions,
           'status': 'success',
         });
         
-        // Progress callback
-        print('Processed ${i + 1}/${imagePaths.length} images');
+        onProgress?.call(i + 1, imagePaths.length);
         
       } catch (e) {
         results.add({
@@ -546,7 +542,7 @@ class BatchProcessor {
       }
     }
     
-    await TflitePlus.close();
+    classifier.dispose();
     return results;
   }
 }

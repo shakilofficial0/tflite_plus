@@ -487,9 +487,10 @@ packages:
   tflite_plus:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: tflite_plus
+      sha256: "47445de8fe2c51ccc1f1f957cb4ed39dbc8082a2167b993d6b919a060a2b4732"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.0"
   typed_data:
     dependency: transitive

@@ -1,0 +1,29 @@
+{
+  "audio_classification": "\"https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/audio_classification/flutter/lite-model_yamnet_classification_tflite_1.tflite",
+  "bertqa": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/bert_qa/flutter/bert_qa_lite-model_mobilebert_1_metadata_1.tflite",
+  "digital_classification": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/digit_classifier/flutter/mnist_metadata.tflite",
+  "gesture_classification": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/gesture_classification/flutter/model_metadata.tflite",
+  "image_classification_mobilenet": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/image_classification/android/mobilenet_v1_1.0_224_quantized_1_metadata_1.tflite",
+  "image_segmentation": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/image_segmentation/flutter/lite-model_deeplabv3_1_metadata_2.tflite",
+  "live_object_detection_ssd_mobilenet": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/object_detection/android/lite-model_ssd_mobilenet_v1_1_metadata_2.tflite",
+  "object_detection_ssd_mobilenet": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/object_detection/android/lite-model_ssd_mobilenet_v1_1_metadata_2.tflite",
+  "object_detection_ssd_mobilenet_v2": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/object_detection/android/lite-model_ssd_mobilenet_v1_1_metadata_2.tflite",
+  "pose_estimation": {
+    "model": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/pose_estimation/flutter/posenet_mobilenet_v1_100_257x257_multi_kpt_stripped.tflite",
+    "labels": false
+  },
+  "reinforcement_learning": {
+    "model": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/flutter-plugin/reinforcement_learning/planestrike_tf.tflite",
+    "labels": false
+  },
+  "style_transfer": {
+    "prediction_model": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/style_transfer/android/magenta_arbitrary-image-stylization-v1-256_int8_prediction_1.tflite",
+    "transfer_model": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/style_transfer/android/magenta_arbitrary-image-stylization-v1-256_int8_transfer_1.tflite"
+  },
+  "super_resolution_esrgan": {
+    "model": "https://tfhub.dev/captain-pool/lite-model/esrgan-tf2/1?lite-format=tflite",
+    "labels": false
+  },
+  "text_classification": "https://storage.googleapis.com/download.tensorflow.org/models/tflite/text_classification/text_classification.tflite"
+
+}

@@ -32,15 +32,15 @@ android {
     // Use the compileSdkVersion from the app if available, otherwise default to latest
     def compileSdkVersionOverride = project.hasProperty('android.compileSdkVersion') ? 
         Integer.parseInt(project.property('android.compileSdkVersion')) : null
-    compileSdk compileSdkVersionOverride ?: 35
+    compileSdk compileSdkVersionOverride ?: 36
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
     sourceSets {
@@ -53,22 +53,32 @@ android {
         // Use the targetSdkVersion from the app if available, otherwise use compileSdk
         def targetSdkVersionOverride = project.hasProperty('android.targetSdkVersion') ? 
             Integer.parseInt(project.property('android.targetSdkVersion')) : null
-        targetSdkVersion targetSdkVersionOverride ?: (compileSdkVersionOverride ?: 35)
+        targetSdkVersion targetSdkVersionOverride ?: (compileSdkVersionOverride ?: 36)
     }
 
     dependencies {
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-        
-        // Google AI Edge LiteRT
-        implementation 'com.google.ai.edge.litert:litert:2.0.2'
-        implementation 'com.google.ai.edge.litert:litert-gpu:2.0.2'
-        implementation 'com.google.ai.edge.litert:litert-support:2.0.2'
-        
-        // Additional ML dependencies
-        implementation 'org.tensorflow:tensorflow-lite-task-vision:0.4.4'
-        implementation 'org.tensorflow:tensorflow-lite-task-text:0.4.4'
-        implementation 'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // --- LiteRT (runtime + support + delegates) ---
+    implementation 'com.google.ai.edge.litert:litert:1.4.0'
+    implementation 'com.google.ai.edge.litert:litert-api:1.4.0'          // ensures API present from LiteRT
+    implementation 'com.google.ai.edge.litert:litert-support:1.4.0'
+    implementation 'com.google.ai.edge.litert:litert-support-api:1.4.0'
+    implementation 'com.google.ai.edge.litert:litert-gpu:1.4.0'
+    implementation 'com.google.ai.edge.litert:litert-gpu-api:1.4.0'
+    implementation 'com.google.ai.edge.litert:litert-metadata:1.4.0'
+
+    // --- Task Library (keep the API, but EXCLUDE original TF Lite + Support that it brings) ---
+    implementation('org.tensorflow:tensorflow-lite-task-vision:0.4.4') {
+        exclude group: 'org.tensorflow', module: 'tensorflow-lite'
+        exclude group: 'org.tensorflow', module: 'tensorflow-lite-api'
+        exclude group: 'org.tensorflow', module: 'tensorflow-lite-gpu'
+        exclude group: 'org.tensorflow', module: 'tensorflow-lite-gpu-api'
+        exclude group: 'org.tensorflow', module: 'tensorflow-lite-metadata'
+        exclude group: 'org.tensorflow', module: 'tensorflow-lite-support'
+        exclude group: 'org.tensorflow', module: 'tensorflow-lite-support-api'
     }
+}
 
     testOptions {
         unitTests.all {

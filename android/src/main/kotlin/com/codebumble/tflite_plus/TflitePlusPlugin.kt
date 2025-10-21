@@ -38,6 +38,8 @@ import org.tensorflow.lite.task.vision.detector.Detection
 import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 import org.tensorflow.lite.task.vision.classifier.Classifications
 
+
+
 /** TflitePlusPlugin */
 class TflitePlusPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel

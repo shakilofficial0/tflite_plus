@@ -5,20 +5,20 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite_plus/tflite_plus.dart';
 
+import 'examples/audio_classification_example.dart';
+import 'examples/bert_qa_example.dart';
+import 'examples/digit_classification_example.dart';
+import 'examples/gesture_classification_example.dart';
 // Import all example screens
 import 'examples/image_classification_example.dart';
+import 'examples/image_segmentation_example.dart';
+import 'examples/live_detection_example.dart';
+import 'examples/model_manager_example.dart';
 import 'examples/object_detection_example.dart';
 import 'examples/pose_estimation_example.dart';
-import 'examples/image_segmentation_example.dart';
 import 'examples/style_transfer_example.dart';
 import 'examples/super_resolution_example.dart';
 import 'examples/text_classification_example.dart';
-import 'examples/bert_qa_example.dart';
-import 'examples/audio_classification_example.dart';
-import 'examples/gesture_classification_example.dart';
-import 'examples/digit_classification_example.dart';
-import 'examples/live_detection_example.dart';
-import 'examples/model_manager_example.dart';
 
 void main() {
   runApp(const MyApp());

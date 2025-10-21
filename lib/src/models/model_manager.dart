@@ -1,6 +1,6 @@
-import '../models/model_config.dart';
-import '../enums/model_type.dart';
 import '../../tflite_plus_platform_interface.dart';
+import '../enums/model_type.dart';
+import '../models/model_config.dart';
 
 /// Manager class for handling multiple TensorFlow Lite models
 class TfLiteModelManager {

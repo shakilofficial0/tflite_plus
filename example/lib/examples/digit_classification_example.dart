@@ -1,6 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:tflite_plus/tflite_plus.dart';
-import 'dart:math' as math;
 
 class DigitClassificationExample extends StatefulWidget {
   const DigitClassificationExample({super.key});

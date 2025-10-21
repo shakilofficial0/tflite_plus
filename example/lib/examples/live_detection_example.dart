@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:tflite_plus/tflite_plus.dart';
 import 'dart:async';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:tflite_plus/tflite_plus.dart';
 
 class LiveDetectionExample extends StatefulWidget {
   const LiveDetectionExample({super.key});

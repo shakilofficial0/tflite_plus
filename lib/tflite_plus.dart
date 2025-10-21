@@ -4,11 +4,11 @@ import 'tflite_plus_platform_interface.dart';
 
 export 'src/enums/model_type.dart';
 export 'src/models/detection.dart';
+export 'src/models/model_config.dart';
+export 'src/models/model_manager.dart';
 export 'src/models/pose.dart';
 export 'src/models/recognition.dart';
 export 'src/models/segmentation.dart';
-export 'src/models/model_config.dart';
-export 'src/models/model_manager.dart';
 
 /// The main class for TensorFlow Lite operations in Flutter
 class TflitePlus {

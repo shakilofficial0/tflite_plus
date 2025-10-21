@@ -1,6 +1,6 @@
 name: tflite_plus
 description: A comprehensive Flutter plugin for Google AI's LiteRT (TensorFlow Lite) with advanced machine learning capabilities for both Android and iOS platforms.
-version: 1.0.0
+version: 1.0.1
 homepage: https://codebumble.net
 repository: https://github.com/shakilofficial0/tflite_plus
 issue_tracker: https://github.com/shakilofficial0/tflite_plus/issues

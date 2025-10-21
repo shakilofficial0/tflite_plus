@@ -78,27 +78,32 @@
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start (FFI Interpreter API)
+
+This package now exposes a low-level, FFI-backed Interpreter API. Use the `Interpreter` class to load models (from assets, files, or buffers), run inference and manage resources.
 
 ```dart
 import 'package:tflite_plus/tflite_plus.dart';
 
-// 1. Load your model
-await TflitePlus.loadModel(
-  model: 'assets/models/mobilenet.tflite',
-  labels: 'assets/models/labels.txt',
-);
+// 1. Load your model from assets
+final interpreter = await Interpreter.fromAsset('assets/models/mobilenet.tflite');
 
-// 2. Run inference
-final results = await TflitePlus.runModelOnImage(
-  path: imagePath,
-  numResults: 5,
-  threshold: 0.1,
-);
+// 2. Prepare your input (must match model input shape and type)
+// Example: a Float32 input buffer for a 1x224x224x3 model
+final input = Float32List(1 * 224 * 224 * 3);
+// Fill `input` with normalized image data...
 
-// 3. Use results
-print('Prediction: ${results?[0]['label']}');
-print('Confidence: ${results?[0]['confidence']}');
+// 3. Prepare output container (shape depends on model)
+final output = List.filled(1 * 1001, 0.0); // adjust to your model's output size
+
+// 4. Run inference
+interpreter.run(input, output);
+
+// 5. Use results
+print('Top score: ${output[0]}');
+
+// 6. Close when done
+interpreter.close();
 ```
 
 ---
@@ -109,7 +114,7 @@ print('Confidence: ${results?[0]['confidence']}');
 
 ```yaml
 dependencies:
-  tflite_plus: ^1.0.0
+  tflite_plus: ^1.0.1
 ```
 
 ### 2. Install
@@ -159,158 +164,94 @@ platform :ios, '12.0'
 
 ---
 
-## 📚 Available Functions
 
-### Core Functions
+## 📚 Public API (high level)
 
-| Function | Description | Return Type |
-|----------|-------------|-------------|
-| `loadModel()` | Load TensorFlow Lite model | `Future<String?>` |
-| `runModelOnImage()` | Run inference on image file | `Future<List<dynamic>?>` |
-| `runModelOnBinary()` | Run inference on binary data | `Future<List<dynamic>?>` |
-| `detectObjectOnImage()` | Detect objects in image | `Future<List<dynamic>?>` |
-| `detectObjectOnBinary()` | Detect objects in binary data | `Future<List<dynamic>?>` |
-| `runPoseNetOnImage()` | Detect poses in image | `Future<List<dynamic>?>` |
-| `runSegmentationOnImage()` | Perform segmentation | `Future<dynamic>` |
-| `close()` | Release model resources | `Future<void>` |
+This repository now exports a set of low-level, FFI-backed primitives. The most commonly used APIs are:
 
-### Utility Functions
+| Symbol | Description |
+|--------|-------------|
+| `Interpreter` | Core class to load a TensorFlow Lite model (from asset/file/buffer) and run inference. See `Interpreter.fromAsset`, `Interpreter.fromBuffer`, `Interpreter.fromFile`, `run`, `runForMultipleInputs`, `invoke`, `close`.
+| `InterpreterOptions` | Options used when creating an `Interpreter` (delegates, threads, etc.).
+| `Delegate` and delegate implementations | Hardware delegates and helpers: `GpuDelegate`, `MetalDelegate`, `XNNPackDelegate`, `CoreMLDelegate`.
+| `Tensor` | Accessor for input/output tensor metadata and data helpers.
+| `Model` | Low-level model helpers (used internally).
 
-| Function | Description | Return Type |
-|----------|-------------|-------------|
-| `isModelLoaded()` | Check if model is loaded | `Future<bool>` |
-| `getModelInputShape()` | Get model input dimensions | `Future<List<int>?>` |
-| `getModelOutputShape()` | Get model output dimensions | `Future<List<int>?>` |
-| `getAvailableDelegates()` | Get available hardware delegates | `Future<List<String>?>` |
+For advanced uses you can also work directly with the exported utilities in `src/util/` such as byte conversion helpers.
 
 ---
 
-## 🎯 Usage Examples
+## 🎯 Usage Examples (Interpreter)
 
-### 1. Image Classification
+Below are three small recipes using the FFI `Interpreter` API. These are intentionally low-level — for higher-level helpers (pre/post-processing, label mapping) check the `example/` folder for complete apps.
+
+### 1. Simple Image Classification (synchronous run)
 
 ```dart
-// Load classification model
-await TflitePlus.loadModel(
-  model: 'assets/models/mobilenet_v1_1.0_224.tflite',
-  labels: 'assets/models/mobilenet_v1_1.0_224_labels.txt',
-  numThreads: 1,
-  useGpuDelegate: true,
-);
+import 'dart:typed_data';
+import 'package:tflite_plus/tflite_plus.dart';
 
-// Classify image
-final results = await TflitePlus.runModelOnImage(
-  path: imagePath,
-  numResults: 5,
-  threshold: 0.1,
-  imageMean: 117.0,
-  imageStd: 1.0,
-);
+final interpreter = await Interpreter.fromAsset('assets/models/mobilenet.tflite');
 
-// Process results
-for (var result in results ?? []) {
-  print('${result['label']}: ${result['confidence']}');
-}
+// Example input for 1x224x224x3 float model
+final input = Float32List(1 * 224 * 224 * 3);
+// TODO: fill input with normalized image bytes
+
+final output = List.filled(1 * 1001, 0.0);
+interpreter.run(input, output);
+
+// Process output (find top results)
+// ...
+
+interpreter.close();
 ```
 
-### 2. Object Detection
+### 2. Object Detection (multiple outputs)
 
 ```dart
-// Load detection model
-await TflitePlus.loadModel(
-  model: 'assets/models/ssd_mobilenet.tflite',
-  labels: 'assets/models/ssd_mobilenet_labels.txt',
-  useGpuDelegate: true,
-);
+import 'dart:typed_data';
+import 'package:tflite_plus/tflite_plus.dart';
 
-// Detect objects
-final detections = await TflitePlus.detectObjectOnImage(
-  path: imagePath,
-  numResultsPerClass: 5,
-  threshold: 0.3,
-  imageMean: 127.5,
-  imageStd: 127.5,
-);
+final interpreter = await Interpreter.fromAsset('assets/models/ssd_mobilenet.tflite');
 
-// Process detections
-for (var detection in detections ?? []) {
-  final rect = detection['rect'];
-  print('Found ${detection['label']} at (${rect['x']}, ${rect['y']})');
-}
+final input = Float32List(1 * 300 * 300 * 3);
+// Output map: index -> buffer for each output tensor
+final outputs = <int, Object>{
+  0: List.filled(1 * 10 * 4, 0.0), // boxes
+  1: List.filled(1 * 10, 0.0), // classes
+  2: List.filled(1 * 10, 0.0), // scores
+};
+
+interpreter.runForMultipleInputs([input], outputs);
+
+// Parse outputs from `outputs`
+
+interpreter.close();
 ```
 
-### 3. Pose Estimation
+### 3. Pose Estimation (invoke + tensor helpers)
 
 ```dart
-// Load pose model
-await TflitePlus.loadModel(
-  model: 'assets/models/posenet.tflite',
-  useGpuDelegate: true,
-);
+import 'dart:typed_data';
+import 'package:tflite_plus/tflite_plus.dart';
 
-// Detect poses
-final poses = await TflitePlus.runPoseNetOnImage(
-  path: imagePath,
-  numResults: 5,
-  threshold: 0.1,
-  imageMean: 127.5,
-  imageStd: 127.5,
-);
+final interpreter = await Interpreter.fromAsset('assets/models/posenet.tflite');
 
-// Process keypoints
-for (var pose in poses ?? []) {
-  for (var keypoint in pose['keypoints']) {
-    print('${keypoint['part']}: (${keypoint['x']}, ${keypoint['y']})');
-  }
-}
+final input = Float32List(1 * 257 * 257 * 3);
+final output = List.filled(1 * 17 * 3, 0.0);
+
+interpreter.run(input, output);
+
+// Output post-processing to get keypoints
+
+interpreter.close();
 ```
 
 ---
 
-## 📊 Parameter Tables
+### Notes on parameters
 
-### loadModel Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `model` | `String` | **Required** | Path to .tflite model file |
-| `labels` | `String?` | `null` | Path to labels file |
-| `numThreads` | `int?` | `1` | Number of CPU threads |
-| `useGpuDelegate` | `bool?` | `false` | Enable GPU acceleration |
-| `useNnApiDelegate` | `bool?` | `false` | Enable NNAPI (Android) / CoreML (iOS) |
-
-### runModelOnImage Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `path` | `String` | **Required** | Image file path |
-| `numResults` | `int?` | `5` | Maximum results to return |
-| `threshold` | `double?` | `0.1` | Confidence threshold |
-| `imageMean` | `double?` | `117.0` | Image normalization mean |
-| `imageStd` | `double?` | `1.0` | Image normalization std |
-| `asynch` | `bool?` | `true` | Run asynchronously |
-
-### detectObjectOnImage Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `path` | `String` | **Required** | Image file path |
-| `numResultsPerClass` | `int?` | `5` | Max results per class |
-| `threshold` | `double?` | `0.1` | Detection threshold |
-| `imageMean` | `double?` | `127.5` | Image normalization mean |
-| `imageStd` | `double?` | `127.5` | Image normalization std |
-| `asynch` | `bool?` | `true` | Run asynchronously |
-
-### runPoseNetOnImage Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `path` | `String` | **Required** | Image file path |
-| `numResults` | `int?` | `5` | Maximum poses to detect |
-| `threshold` | `double?` | `0.1` | Keypoint threshold |
-| `imageMean` | `double?` | `127.5` | Image normalization mean |
-| `imageStd` | `double?` | `127.5` | Image normalization std |
-| `asynch` | `bool?` | `true` | Run asynchronously |
+The new API is lower-level and works directly with typed buffers (Float32List, Uint8List, etc.). Use `Tensor` helpers and `InterpreterOptions` to configure delegates and threads. See `lib/src/interpreter.dart` for the full API and examples in `example/` for end-to-end usage.
 
 ---
 

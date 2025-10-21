@@ -6,6 +6,10 @@
 !.vscode/tasks.json
 !.vscode/settings.json
 
+# Ensure these implementation files are not ignored so they are included in the published package
+!lib/tflite_flutter_method_channel.dart
+!lib/tflite_flutter_platform_interface.dart
+
 .packages
 .pub/
 .dart_tool/

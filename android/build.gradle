@@ -29,7 +29,10 @@ android {
         namespace 'com.codebumble.tflite_plus'
     }
 
-    compileSdk 34
+    // Use the compileSdkVersion from the app if available, otherwise default to latest
+    def compileSdkVersionOverride = project.hasProperty('android.compileSdkVersion') ? 
+        Integer.parseInt(project.property('android.compileSdkVersion')) : null
+    compileSdk compileSdkVersionOverride ?: 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -47,7 +50,10 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 34
+        // Use the targetSdkVersion from the app if available, otherwise use compileSdk
+        def targetSdkVersionOverride = project.hasProperty('android.targetSdkVersion') ? 
+            Integer.parseInt(project.property('android.targetSdkVersion')) : null
+        targetSdkVersion targetSdkVersionOverride ?: (compileSdkVersionOverride ?: 35)
     }
 
     dependencies {

@@ -5,6 +5,21 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite_plus/tflite_plus.dart';
 
+// Import all example screens
+import 'examples/image_classification_example.dart';
+import 'examples/object_detection_example.dart';
+import 'examples/pose_estimation_example.dart';
+import 'examples/image_segmentation_example.dart';
+import 'examples/style_transfer_example.dart';
+import 'examples/super_resolution_example.dart';
+import 'examples/text_classification_example.dart';
+import 'examples/bert_qa_example.dart';
+import 'examples/audio_classification_example.dart';
+import 'examples/gesture_classification_example.dart';
+import 'examples/digit_classification_example.dart';
+import 'examples/live_detection_example.dart';
+import 'examples/model_manager_example.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -15,14 +30,202 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TensorFlow Lite Plus Demo',
+      title: 'TensorFlow Lite Plus Examples',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'TensorFlow Lite Plus Demo'),
+      home: const ExampleHomePage(),
     );
   }
+}
+
+class ExampleHomePage extends StatelessWidget {
+  const ExampleHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('TensorFlow Lite Plus Examples'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
+          _buildCategorySection(
+            context,
+            'Image Processing',
+            [
+              _ExampleItem(
+                'Image Classification',
+                'Classify images using MobileNet',
+                Icons.image,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const ImageClassificationExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Object Detection',
+                'Detect objects with bounding boxes',
+                Icons.crop_free,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const ObjectDetectionExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Live Object Detection',
+                'Real-time object detection with camera',
+                Icons.video_camera_front,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const LiveDetectionExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Pose Estimation',
+                'Detect human poses and keypoints',
+                Icons.accessibility,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const PoseEstimationExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Image Segmentation',
+                'Pixel-level image segmentation',
+                Icons.layers,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const ImageSegmentationExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Style Transfer',
+                'Apply artistic styles to images',
+                Icons.palette,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const StyleTransferExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Super Resolution',
+                'Enhance image resolution with ESRGAN',
+                Icons.high_quality,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const SuperResolutionExample(),
+                )),
+              ),
+            ],
+          ),
+          _buildCategorySection(
+            context,
+            'Text & Language',
+            [
+              _ExampleItem(
+                'Text Classification',
+                'Sentiment analysis and text classification',
+                Icons.text_fields,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const TextClassificationExample(),
+                )),
+              ),
+              _ExampleItem(
+                'BERT Question Answering',
+                'Answer questions using BERT model',
+                Icons.question_answer,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const BertQAExample(),
+                )),
+              ),
+            ],
+          ),
+          _buildCategorySection(
+            context,
+            'Audio & Gestures',
+            [
+              _ExampleItem(
+                'Audio Classification',
+                'Classify sounds using YAMNet',
+                Icons.audiotrack,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const AudioClassificationExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Gesture Classification',
+                'Recognize hand gestures',
+                Icons.back_hand,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const GestureClassificationExample(),
+                )),
+              ),
+            ],
+          ),
+          _buildCategorySection(
+            context,
+            'Specialized Tasks',
+            [
+              _ExampleItem(
+                'Digit Classification',
+                'MNIST handwritten digit recognition',
+                Icons.looks_one,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const DigitClassificationExample(),
+                )),
+              ),
+              _ExampleItem(
+                'Model Manager',
+                'Advanced model management system',
+                Icons.settings,
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const ModelManagerExample(),
+                )),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategorySection(
+    BuildContext context,
+    String title,
+    List<_ExampleItem> examples,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ...examples.map((example) => Card(
+          margin: const EdgeInsets.only(bottom: 8.0),
+          child: ListTile(
+            leading: Icon(example.icon, color: Theme.of(context).primaryColor),
+            title: Text(example.title),
+            subtitle: Text(example.description),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: example.onTap,
+          ),
+        )),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+}
+
+class _ExampleItem {
+  final String title;
+  final String description;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _ExampleItem(this.title, this.description, this.icon, this.onTap);
 }
 
 class MyHomePage extends StatefulWidget {

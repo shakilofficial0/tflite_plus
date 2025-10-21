@@ -19,7 +19,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
-import 'package:tflite_flutter/tflite_plus.dart';
+import 'package:tflite_plus/tflite_plus.dart';
 
 void main() {
   runApp(const App());

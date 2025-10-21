@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import 'package:flutter/material.dart';
-import 'package:tflite_flutter_plugin_example/classifier.dart';
+import 'package:tflite_plus_plugin_example/classifier.dart';
 
 void main() => runApp(const MyApp());
 

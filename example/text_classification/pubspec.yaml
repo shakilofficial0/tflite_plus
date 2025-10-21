@@ -1,5 +1,5 @@
-name: tflite_flutter_plugin_example
-description: Demonstrates how to use the tflite_flutter_plugin plugin.
+name: tflite_plus_plugin_example
+description: Demonstrates how to use the tflite_plus_plugin plugin.
 publish_to: "none"
 
 version: 1.0.0+1
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  tflite_flutter:
+  tflite_plus:
     path: ../../
   path_provider: ^2.0.1
   # The following adds the Cupertino Icons font to your application.

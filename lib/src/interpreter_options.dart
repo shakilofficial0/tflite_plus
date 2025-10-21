@@ -18,9 +18,9 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:quiver/check.dart';
-import 'package:tflite_flutter/src/bindings/bindings.dart';
-import 'package:tflite_flutter/src/bindings/tensorflow_lite_bindings_generated.dart';
-import 'package:tflite_flutter/tflite_plus.dart';
+import 'package:tflite_plus/src/bindings/bindings.dart';
+import 'package:tflite_plus/src/bindings/tensorflow_lite_bindings_generated.dart';
+import 'package:tflite_plus/tflite_plus.dart';
 
 /// TensorFlowLite interpreter options.
 class InterpreterOptions {

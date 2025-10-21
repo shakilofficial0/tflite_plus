@@ -18,7 +18,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'package:camera/camera.dart';
 import 'package:image/image.dart' as image_lib;
-import 'package:tflite_flutter/tflite_plus.dart';
+import 'package:tflite_plus/tflite_plus.dart';
 
 import '../image_utils.dart';
 

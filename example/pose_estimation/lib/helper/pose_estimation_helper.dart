@@ -18,7 +18,7 @@ import 'dart:isolate';
 
 import 'package:camera/camera.dart';
 import 'package:pose_estimation/models/person.dart';
-import 'package:tflite_flutter/tflite_plus.dart';
+import 'package:tflite_plus/tflite_plus.dart';
 
 import 'isolate_inference.dart';
 

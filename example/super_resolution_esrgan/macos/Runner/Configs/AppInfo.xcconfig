@@ -11,4 +11,4 @@ PRODUCT_NAME = super_resolution_esrgan
 PRODUCT_BUNDLE_IDENTIFIER = org.tensorflow.tfliteflutter.superResolutionEsrgan
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 org.tensorflow.tflite_flutter. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 org.tensorflow.tflite_plus. All rights reserved.

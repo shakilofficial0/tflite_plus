@@ -19,9 +19,9 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 import 'package:quiver/check.dart';
-import 'package:tflite_flutter/src/bindings/bindings.dart';
-import 'package:tflite_flutter/src/bindings/tensorflow_lite_bindings_generated.dart';
-import 'package:tflite_flutter/src/util/byte_conversion_utils.dart';
+import 'package:tflite_plus/src/bindings/bindings.dart';
+import 'package:tflite_plus/src/bindings/tensorflow_lite_bindings_generated.dart';
+import 'package:tflite_plus/src/util/byte_conversion_utils.dart';
 import 'package:flutter/foundation.dart';
 
 import 'ffi/helper.dart';

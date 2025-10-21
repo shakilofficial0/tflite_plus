@@ -1,11 +1,35 @@
-include ':app'
+pluginManagement {
+    def flutterSdkPath = {
+        def p = new Properties()
+        file("local.properties").withInputStream { p.load(it) }
+        def path = p.getProperty("flutter.sdk")
+        assert path != null : "flutter.sdk not set in local.properties"
+        return path
+    }()
 
-def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
-def properties = new Properties()
+    // Let Flutter inject its Gradle plugins
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
-assert localPropertiesFile.exists()
-localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
-def flutterSdkPath = properties.getProperty("flutter.sdk")
-assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
-apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"
+plugins {
+    // Flutter plugin loader (replaces the old `apply from:` line)
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+
+    // Your AGP (from your project-level build.gradle): 8.9.0
+    id "com.android.application" version "8.9.0" apply false
+
+    // Kotlin must be newer than 1.7.x for AGP 8.x. Use a safe 1.9.x:
+    id "org.jetbrains.kotlin.android" version "2.1.0" apply false
+
+    // If you use these, keep them here with versions and apply=false:
+    // id "com.google.gms.google-services" version "4.4.2" apply false
+    // id "com.google.firebase.crashlytics" version "3.0.2" apply false
+}
+
+include(":app")

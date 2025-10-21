@@ -18,7 +18,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
-import 'package:tflite_flutter/tflite_plus.dart';
+import 'package:tflite_plus/tflite_plus.dart';
 
 class AudioClassificationHelper {
   static const _modelPath = 'assets/models/yamnet.tflite';

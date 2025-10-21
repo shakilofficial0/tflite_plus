@@ -1,3 +1,4 @@
+package com.codebumble.tflite_plus
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -15,7 +16,7 @@ class TflitePlusPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "tflite_flutter")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "tflite_plus")
     channel.setMethodCallHandler(this)
   }
 

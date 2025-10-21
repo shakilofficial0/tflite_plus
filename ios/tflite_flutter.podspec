@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint tflite_flutter.podspec` to validate before publishing.
+# Run `pod lib lint tflite_plus.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'tflite_flutter'
+  s.name             = 'tflite_plus'
   s.version          = '0.0.1'
   s.summary          = 'TensorFlow Lite plugin for Flutter apps.'
   s.description      = <<-DESC

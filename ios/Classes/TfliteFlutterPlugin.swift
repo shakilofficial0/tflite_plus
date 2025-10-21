@@ -3,7 +3,7 @@ import UIKit
 
 public class TfliteFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "tflite_flutter", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "tflite_plus", binaryMessenger: registrar.messenger())
     let instance = TfliteFlutterPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }

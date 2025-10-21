@@ -35,9 +35,9 @@ class _ObjectDetectionExampleState extends State<ObjectDetectionExample> {
       print('Object detection model loaded successfully');
     } catch (e) {
       print('Failed to load model: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
@@ -64,9 +64,9 @@ class _ObjectDetectionExampleState extends State<ObjectDetectionExample> {
       setState(() {
         _busy = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Object detection failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Object detection failed: $e')));
     }
   }
 
@@ -120,7 +120,10 @@ class _ObjectDetectionExampleState extends State<ObjectDetectionExample> {
                   children: [
                     const Text(
                       'SSD MobileNet Object Detection',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text(
@@ -217,29 +220,44 @@ class _ObjectDetectionExampleState extends State<ObjectDetectionExample> {
                       else if (_recognitions != null) ...[
                         const Text(
                           'Detection Results:',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         if (_recognitions!.isEmpty)
                           const Text('No objects detected')
                         else
-                          ..._recognitions!.take(5).map((recognition) => Card(
-                            color: Theme.of(context).colorScheme.surface,
-                            child: ListTile(
-                              title: Text(recognition['detectedClass'] ?? 'Unknown'),
-                              trailing: Text(
-                                '${((recognition['confidenceInClass'] ?? 0.0) * 100).toStringAsFixed(1)}%',
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              leading: CircleAvatar(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                child: Text(
-                                  '${(_recognitions!.indexOf(recognition) + 1)}',
-                                  style: const TextStyle(color: Colors.white),
+                          ..._recognitions!
+                              .take(5)
+                              .map(
+                                (recognition) => Card(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  child: ListTile(
+                                    title: Text(
+                                      recognition['detectedClass'] ?? 'Unknown',
+                                    ),
+                                    trailing: Text(
+                                      '${((recognition['confidenceInClass'] ?? 0.0) * 100).toStringAsFixed(1)}%',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    leading: CircleAvatar(
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).primaryColor,
+                                      child: Text(
+                                        '${(_recognitions!.indexOf(recognition) + 1)}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          )),
                       ],
                     ],
                   ),

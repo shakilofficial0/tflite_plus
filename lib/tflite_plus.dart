@@ -13,7 +13,7 @@ export 'src/models/segmentation.dart';
 /// The main class for TensorFlow Lite operations in Flutter
 class TflitePlus {
   /// Load a TensorFlow Lite model from assets
-  /// 
+  ///
   /// [model] - Path to the .tflite model file in assets
   /// [labels] - Optional path to labels file
   /// [numThreads] - Number of threads to use (default: 1)
@@ -39,7 +39,7 @@ class TflitePlus {
   }
 
   /// Run object detection on an image
-  /// 
+  ///
   /// [path] - Path to the image file
   /// [imageMean] - Image mean for normalization (default: 127.5)
   /// [imageStd] - Image standard deviation for normalization (default: 127.5)
@@ -65,7 +65,7 @@ class TflitePlus {
   }
 
   /// Run object detection on binary image data
-  /// 
+  ///
   /// [bytesList] - Image data as bytes
   /// [imageHeight] - Image height
   /// [imageWidth] - Image width
@@ -100,7 +100,7 @@ class TflitePlus {
   }
 
   /// Run image classification on an image
-  /// 
+  ///
   /// [path] - Path to the image file
   /// [numResults] - Maximum number of results (default: 5)
   /// [threshold] - Confidence threshold (default: 0.1)
@@ -126,7 +126,7 @@ class TflitePlus {
   }
 
   /// Run image classification on binary image data
-  /// 
+  ///
   /// [bytesList] - Image data as bytes
   /// [imageHeight] - Image height
   /// [imageWidth] - Image width
@@ -158,7 +158,7 @@ class TflitePlus {
   }
 
   /// Run pose estimation on an image
-  /// 
+  ///
   /// [path] - Path to the image file
   /// [numResults] - Maximum number of poses (default: 5)
   /// [threshold] - Confidence threshold (default: 0.1)
@@ -184,7 +184,7 @@ class TflitePlus {
   }
 
   /// Run pose estimation on binary image data
-  /// 
+  ///
   /// [bytesList] - Image data as bytes
   /// [imageHeight] - Image height
   /// [imageWidth] - Image width
@@ -216,7 +216,7 @@ class TflitePlus {
   }
 
   /// Run semantic segmentation on an image
-  /// 
+  ///
   /// [path] - Path to the image file
   /// [imageMean] - Image mean for normalization (default: 127.5)
   /// [imageStd] - Image standard deviation for normalization (default: 127.5)
@@ -242,7 +242,7 @@ class TflitePlus {
   }
 
   /// Run semantic segmentation on binary image data
-  /// 
+  ///
   /// [bytesList] - Image data as bytes
   /// [imageHeight] - Image height
   /// [imageWidth] - Image width

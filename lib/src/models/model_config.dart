@@ -4,34 +4,34 @@ import '../enums/model_type.dart';
 class TfLiteModelConfig {
   /// Unique identifier for the model
   final String id;
-  
+
   /// Path to the .tflite model file
   final String modelPath;
-  
+
   /// Optional path to labels file
   final String? labelsPath;
-  
+
   /// Number of threads to use for inference
   final int numThreads;
-  
+
   /// Whether the model files are in assets
   final bool isAsset;
-  
+
   /// Use GPU acceleration if available
   final bool useGpuDelegate;
-  
+
   /// Use NNAPI on Android or CoreML on iOS
   final bool useNnApiDelegate;
-  
+
   /// Model type for optimization and validation
   final ModelType modelType;
-  
+
   /// Input image dimensions
   final ModelInputConfig inputConfig;
-  
+
   /// Output configuration
   final ModelOutputConfig outputConfig;
-  
+
   /// Optional preprocessing configuration
   final PreprocessingConfig? preprocessingConfig;
 
@@ -88,16 +88,16 @@ class TfLiteModelConfig {
 class ModelInputConfig {
   /// Input image width
   final int width;
-  
+
   /// Input image height
   final int height;
-  
+
   /// Number of channels (1 for grayscale, 3 for RGB)
   final int channels;
-  
+
   /// Batch size (usually 1 for mobile inference)
   final int batchSize;
-  
+
   /// Input data type
   final ModelDataType dataType;
 
@@ -122,16 +122,16 @@ class ModelInputConfig {
 class ModelOutputConfig {
   /// Number of output classes (for classification)
   final int? numClasses;
-  
+
   /// Output data type
   final ModelDataType dataType;
-  
+
   /// Whether output includes bounding boxes (for detection)
   final bool hasBoundingBoxes;
-  
+
   /// Whether output includes keypoints (for pose estimation)
   final bool hasKeypoints;
-  
+
   /// Whether output is segmentation mask
   final bool isSegmentation;
 
@@ -153,13 +153,13 @@ class ModelOutputConfig {
 class PreprocessingConfig {
   /// Image mean for normalization
   final double imageMean;
-  
+
   /// Image standard deviation for normalization
   final double imageStd;
-  
+
   /// Whether to resize image to model input size
   final bool autoResize;
-  
+
   /// Whether to normalize pixel values
   final bool normalize;
 
@@ -177,34 +177,25 @@ class PreprocessingConfig {
 }
 
 /// Data types supported by TensorFlow Lite
-enum ModelDataType {
-  float32,
-  int8,
-  uint8,
-  int16,
-  int32,
-  int64,
-}
-
-
+enum ModelDataType { float32, int8, uint8, int16, int32, int64 }
 
 /// Loaded model instance with metadata and state
 class LoadedModel {
   /// Model configuration
   final TfLiteModelConfig config;
-  
+
   /// Whether the model is currently loaded
   final bool isLoaded;
-  
+
   /// Load timestamp
   final DateTime loadedAt;
-  
+
   /// Labels if available
   final List<String>? labels;
-  
+
   /// Actual input shape from the loaded model
   final List<int>? actualInputShape;
-  
+
   /// Actual output shape from the loaded model
   final List<int>? actualOutputShape;
 

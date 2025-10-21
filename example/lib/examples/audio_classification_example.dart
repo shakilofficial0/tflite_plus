@@ -5,10 +5,12 @@ class AudioClassificationExample extends StatefulWidget {
   const AudioClassificationExample({super.key});
 
   @override
-  State<AudioClassificationExample> createState() => _AudioClassificationExampleState();
+  State<AudioClassificationExample> createState() =>
+      _AudioClassificationExampleState();
 }
 
-class _AudioClassificationExampleState extends State<AudioClassificationExample> {
+class _AudioClassificationExampleState
+    extends State<AudioClassificationExample> {
   List<dynamic>? _results;
   bool _busy = false;
   bool _isRecording = false;
@@ -29,9 +31,9 @@ class _AudioClassificationExampleState extends State<AudioClassificationExample>
         useGpuDelegate: false,
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
@@ -40,10 +42,10 @@ class _AudioClassificationExampleState extends State<AudioClassificationExample>
       _isRecording = true;
       _busy = true;
     });
-    
+
     // Simulate recording and classification
     await Future.delayed(const Duration(seconds: 3));
-    
+
     setState(() {
       _isRecording = false;
       _busy = false;
@@ -73,10 +75,15 @@ class _AudioClassificationExampleState extends State<AudioClassificationExample>
                   children: [
                     const Text(
                       'YAMNet Audio Classification',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    const Text('Classify sounds and audio events using YAMNet.'),
+                    const Text(
+                      'Classify sounds and audio events using YAMNet.',
+                    ),
                     const SizedBox(height: 32),
                     GestureDetector(
                       onTap: _busy ? null : _startRecording,
@@ -84,7 +91,9 @@ class _AudioClassificationExampleState extends State<AudioClassificationExample>
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
-                          color: _isRecording ? Colors.red : Theme.of(context).primaryColor,
+                          color: _isRecording
+                              ? Colors.red
+                              : Theme.of(context).primaryColor,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -96,7 +105,9 @@ class _AudioClassificationExampleState extends State<AudioClassificationExample>
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      _isRecording ? 'Recording... (3s)' : 'Tap to start recording',
+                      _isRecording
+                          ? 'Recording... (3s)'
+                          : 'Tap to start recording',
                       style: const TextStyle(fontSize: 16),
                     ),
                   ],
@@ -113,7 +124,10 @@ class _AudioClassificationExampleState extends State<AudioClassificationExample>
                       children: [
                         const Text(
                           'Classification Results',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Expanded(
@@ -125,16 +139,22 @@ class _AudioClassificationExampleState extends State<AudioClassificationExample>
                                 color: Theme.of(context).colorScheme.surface,
                                 child: ListTile(
                                   leading: CircleAvatar(
-                                    backgroundColor: Theme.of(context).primaryColor,
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).primaryColor,
                                     child: Text(
                                       '${index + 1}',
-                                      style: const TextStyle(color: Colors.white),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                   title: Text(result['label'] ?? 'Unknown'),
                                   trailing: Text(
                                     '${((result['confidence'] ?? 0.0) * 100).toStringAsFixed(1)}%',
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               );

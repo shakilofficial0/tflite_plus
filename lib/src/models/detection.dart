@@ -2,13 +2,13 @@
 class BoundingBox {
   /// X coordinate of the top-left corner
   final double x;
-  
+
   /// Y coordinate of the top-left corner
   final double y;
-  
+
   /// Width of the bounding box
   final double width;
-  
+
   /// Height of the bounding box
   final double height;
 
@@ -31,12 +31,7 @@ class BoundingBox {
 
   /// Convert BoundingBox to JSON
   Map<String, dynamic> toJson() {
-    return {
-      'x': x,
-      'y': y,
-      'w': width,
-      'h': height,
-    };
+    return {'x': x, 'y': y, 'w': width, 'h': height};
   }
 
   @override
@@ -49,13 +44,13 @@ class BoundingBox {
 class Detection {
   /// The bounding box of the detected object
   final BoundingBox boundingBox;
-  
+
   /// The classification label
   final String? label;
-  
+
   /// The confidence score (0.0 to 1.0)
   final double? confidence;
-  
+
   /// The index of the detected class
   final int? detectedClass;
 

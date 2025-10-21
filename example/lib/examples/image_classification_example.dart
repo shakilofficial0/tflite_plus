@@ -8,10 +8,12 @@ class ImageClassificationExample extends StatefulWidget {
   const ImageClassificationExample({super.key});
 
   @override
-  State<ImageClassificationExample> createState() => _ImageClassificationExampleState();
+  State<ImageClassificationExample> createState() =>
+      _ImageClassificationExampleState();
 }
 
-class _ImageClassificationExampleState extends State<ImageClassificationExample> {
+class _ImageClassificationExampleState
+    extends State<ImageClassificationExample> {
   File? _image;
   List<dynamic>? _recognitions;
   bool _busy = false;
@@ -35,9 +37,9 @@ class _ImageClassificationExampleState extends State<ImageClassificationExample>
       print('Model loaded successfully');
     } catch (e) {
       print('Failed to load model: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
@@ -64,9 +66,9 @@ class _ImageClassificationExampleState extends State<ImageClassificationExample>
       setState(() {
         _busy = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Classification failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Classification failed: $e')));
     }
   }
 
@@ -120,7 +122,10 @@ class _ImageClassificationExampleState extends State<ImageClassificationExample>
                   children: [
                     const Text(
                       'MobileNet Image Classification',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text(
@@ -175,26 +180,33 @@ class _ImageClassificationExampleState extends State<ImageClassificationExample>
                       else if (_recognitions != null) ...[
                         const Text(
                           'Classification Results:',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 8),
-                        ..._recognitions!.map((recognition) => Card(
-                          color: Theme.of(context).colorScheme.surface,
-                          child: ListTile(
-                            title: Text(recognition['label'] ?? 'Unknown'),
-                            trailing: Text(
-                              '${((recognition['confidence'] ?? 0.0) * 100).toStringAsFixed(1)}%',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            leading: CircleAvatar(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              child: Text(
-                                '${(_recognitions!.indexOf(recognition) + 1)}',
-                                style: const TextStyle(color: Colors.white),
+                        ..._recognitions!.map(
+                          (recognition) => Card(
+                            color: Theme.of(context).colorScheme.surface,
+                            child: ListTile(
+                              title: Text(recognition['label'] ?? 'Unknown'),
+                              trailing: Text(
+                                '${((recognition['confidence'] ?? 0.0) * 100).toStringAsFixed(1)}%',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              leading: CircleAvatar(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                child: Text(
+                                  '${(_recognitions!.indexOf(recognition) + 1)}',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
-                        )),
+                        ),
                       ],
                     ],
                   ),

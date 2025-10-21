@@ -31,10 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TensorFlow Lite Plus Examples',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: const ExampleHomePage(),
     );
   }
@@ -53,134 +50,155 @@ class ExampleHomePage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          _buildCategorySection(
-            context,
-            'Image Processing',
-            [
-              _ExampleItem(
-                'Image Classification',
-                'Classify images using MobileNet',
-                Icons.image,
-                () => Navigator.push(context, MaterialPageRoute(
+          _buildCategorySection(context, 'Image Processing', [
+            _ExampleItem(
+              'Image Classification',
+              'Classify images using MobileNet',
+              Icons.image,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const ImageClassificationExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Object Detection',
-                'Detect objects with bounding boxes',
-                Icons.crop_free,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Object Detection',
+              'Detect objects with bounding boxes',
+              Icons.crop_free,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const ObjectDetectionExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Live Object Detection',
-                'Real-time object detection with camera',
-                Icons.video_camera_front,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Live Object Detection',
+              'Real-time object detection with camera',
+              Icons.video_camera_front,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const LiveDetectionExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Pose Estimation',
-                'Detect human poses and keypoints',
-                Icons.accessibility,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Pose Estimation',
+              'Detect human poses and keypoints',
+              Icons.accessibility,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const PoseEstimationExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Image Segmentation',
-                'Pixel-level image segmentation',
-                Icons.layers,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Image Segmentation',
+              'Pixel-level image segmentation',
+              Icons.layers,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const ImageSegmentationExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Style Transfer',
-                'Apply artistic styles to images',
-                Icons.palette,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Style Transfer',
+              'Apply artistic styles to images',
+              Icons.palette,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const StyleTransferExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Super Resolution',
-                'Enhance image resolution with ESRGAN',
-                Icons.high_quality,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Super Resolution',
+              'Enhance image resolution with ESRGAN',
+              Icons.high_quality,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const SuperResolutionExample(),
-                )),
+                ),
               ),
-            ],
-          ),
-          _buildCategorySection(
-            context,
-            'Text & Language',
-            [
-              _ExampleItem(
-                'Text Classification',
-                'Sentiment analysis and text classification',
-                Icons.text_fields,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+          ]),
+          _buildCategorySection(context, 'Text & Language', [
+            _ExampleItem(
+              'Text Classification',
+              'Sentiment analysis and text classification',
+              Icons.text_fields,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const TextClassificationExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'BERT Question Answering',
-                'Answer questions using BERT model',
-                Icons.question_answer,
-                () => Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const BertQAExample(),
-                )),
+            ),
+            _ExampleItem(
+              'BERT Question Answering',
+              'Answer questions using BERT model',
+              Icons.question_answer,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BertQAExample()),
               ),
-            ],
-          ),
-          _buildCategorySection(
-            context,
-            'Audio & Gestures',
-            [
-              _ExampleItem(
-                'Audio Classification',
-                'Classify sounds using YAMNet',
-                Icons.audiotrack,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+          ]),
+          _buildCategorySection(context, 'Audio & Gestures', [
+            _ExampleItem(
+              'Audio Classification',
+              'Classify sounds using YAMNet',
+              Icons.audiotrack,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const AudioClassificationExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Gesture Classification',
-                'Recognize hand gestures',
-                Icons.back_hand,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Gesture Classification',
+              'Recognize hand gestures',
+              Icons.back_hand,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const GestureClassificationExample(),
-                )),
+                ),
               ),
-            ],
-          ),
-          _buildCategorySection(
-            context,
-            'Specialized Tasks',
-            [
-              _ExampleItem(
-                'Digit Classification',
-                'MNIST handwritten digit recognition',
-                Icons.looks_one,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+          ]),
+          _buildCategorySection(context, 'Specialized Tasks', [
+            _ExampleItem(
+              'Digit Classification',
+              'MNIST handwritten digit recognition',
+              Icons.looks_one,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const DigitClassificationExample(),
-                )),
+                ),
               ),
-              _ExampleItem(
-                'Model Manager',
-                'Advanced model management system',
-                Icons.settings,
-                () => Navigator.push(context, MaterialPageRoute(
+            ),
+            _ExampleItem(
+              'Model Manager',
+              'Advanced model management system',
+              Icons.settings,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) => const ModelManagerExample(),
-                )),
+                ),
               ),
-            ],
-          ),
+            ),
+          ]),
         ],
       ),
     );
@@ -198,21 +216,26 @@ class ExampleHomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+        ...examples.map(
+          (example) => Card(
+            margin: const EdgeInsets.only(bottom: 8.0),
+            child: ListTile(
+              leading: Icon(
+                example.icon,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(example.title),
+              subtitle: Text(example.description),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: example.onTap,
             ),
           ),
         ),
-        ...examples.map((example) => Card(
-          margin: const EdgeInsets.only(bottom: 8.0),
-          child: ListTile(
-            leading: Icon(example.icon, color: Theme.of(context).primaryColor),
-            title: Text(example.title),
-            subtitle: Text(example.description),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: example.onTap,
-          ),
-        )),
         const SizedBox(height: 16),
       ],
     );
@@ -254,9 +277,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> initPlatformState() async {
     String platformVersion;
     List<String> delegates;
-    
+
     try {
-      platformVersion = await TflitePlus.getPlatformVersion() ?? 'Unknown platform version';
+      platformVersion =
+          await TflitePlus.getPlatformVersion() ?? 'Unknown platform version';
       delegates = await TflitePlus.getAvailableDelegates() ?? [];
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
@@ -283,7 +307,9 @@ class _MyHomePageState extends State<MyHomePage> {
         model: 'assets/models/mobilenet_v1_1.0_224.tflite',
         labels: 'assets/models/mobilenet_v1_1.0_224_labels.txt',
         numThreads: 1,
-        useGpuDelegate: _availableDelegates.contains('GPU') || _availableDelegates.contains('Metal'),
+        useGpuDelegate:
+            _availableDelegates.contains('GPU') ||
+            _availableDelegates.contains('Metal'),
       );
 
       setState(() {
@@ -303,7 +329,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    
+
     if (image != null) {
       setState(() {
         _selectedImage = File(image.path);
@@ -425,9 +451,9 @@ class _MyHomePageState extends State<MyHomePage> {
         _results = null;
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error closing model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error closing model: $e')));
     }
   }
 
@@ -455,7 +481,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     const SizedBox(height: 8),
                     Text('Platform: $_platformVersion'),
-                    Text('Available Delegates: ${_availableDelegates.join(', ')}'),
+                    Text(
+                      'Available Delegates: ${_availableDelegates.join(', ')}',
+                    ),
                     Text('Model Status: $_modelStatus'),
                   ],
                 ),
@@ -543,7 +571,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       runSpacing: 8,
                       children: [
                         ElevatedButton(
-                          onPressed: _isLoading ? null : _runImageClassification,
+                          onPressed: _isLoading
+                              ? null
+                              : _runImageClassification,
                           child: const Text('Image Classification'),
                         ),
                         ElevatedButton(
@@ -562,9 +592,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             if (_isLoading) ...[
               const SizedBox(height: 16),
-              const Center(
-                child: CircularProgressIndicator(),
-              ),
+              const Center(child: CircularProgressIndicator()),
             ],
             if (_results != null) ...[
               const SizedBox(height: 16),
@@ -588,9 +616,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         child: Text(
                           _results.toString(),
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                fontFamily: 'monospace',
-                              ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(fontFamily: 'monospace'),
                         ),
                       ),
                     ],

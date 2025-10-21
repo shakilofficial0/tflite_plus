@@ -2,48 +2,48 @@
 enum ModelType {
   /// Image classification model
   imageClassification('image_classification'),
-  
+
   /// Object detection model
   objectDetection('object_detection'),
-  
+
   /// Pose estimation model (PoseNet)
   poseEstimation('pose_estimation'),
-  
+
   /// Semantic segmentation model
   imageSegmentation('image_segmentation'),
-  
+
   /// Style transfer model
   styleTransfer('style_transfer'),
-  
+
   /// Super resolution model
   superResolution('super_resolution'),
-  
+
   /// Text classification model
   textClassification('text_classification'),
-  
+
   /// Question answering model (BERT)
   questionAnswering('question_answering'),
-  
+
   /// Audio classification model
   audioClassification('audio_classification'),
-  
+
   /// Speech recognition model
   speechRecognition('speech_recognition'),
-  
+
   /// Gesture classification model
   gestureClassification('gesture_classification'),
-  
+
   /// Digit classification model
   digitClassification('digit_classification'),
-  
+
   /// Reinforcement learning model
   reinforcementLearning('reinforcement_learning'),
-  
+
   /// Custom model type
   custom('custom');
 
   const ModelType(this.value);
-  
+
   /// String value of the model type
   final String value;
 
@@ -92,21 +92,21 @@ enum ModelType {
 enum DelegateType {
   /// CPU delegate (default)
   cpu('cpu'),
-  
+
   /// GPU delegate for acceleration
   gpu('gpu'),
-  
+
   /// NNAPI delegate for Android
   nnapi('nnapi'),
-  
+
   /// Metal delegate for iOS
   metal('metal'),
-  
+
   /// CoreML delegate for iOS
   coreml('coreml');
 
   const DelegateType(this.value);
-  
+
   /// String value of the delegate type
   final String value;
 

@@ -18,7 +18,8 @@ class _BertQAExampleState extends State<BertQAExample> {
   void initState() {
     super.initState();
     _loadModel();
-    _contextController.text = "TensorFlow Lite is Google's lightweight solution for mobile and embedded devices. It enables on-device machine learning inference with low latency and small binary size.";
+    _contextController.text =
+        "TensorFlow Lite is Google's lightweight solution for mobile and embedded devices. It enables on-device machine learning inference with low latency and small binary size.";
   }
 
   Future<void> _loadModel() async {
@@ -30,15 +31,17 @@ class _BertQAExampleState extends State<BertQAExample> {
         useGpuDelegate: false,
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
   Future<void> _answerQuestion() async {
-    if (_contextController.text.trim().isEmpty || _questionController.text.trim().isEmpty) return;
-    
+    if (_contextController.text.trim().isEmpty ||
+        _questionController.text.trim().isEmpty)
+      return;
+
     setState(() => _busy = true);
     try {
       // Note: This would require a specialized BERT QA method
@@ -49,9 +52,9 @@ class _BertQAExampleState extends State<BertQAExample> {
       });
     } catch (e) {
       setState(() => _busy = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Question answering failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Question answering failed: $e')));
     }
   }
 
@@ -73,7 +76,10 @@ class _BertQAExampleState extends State<BertQAExample> {
                   children: [
                     const Text(
                       'BERT Question Answering',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     TextField(
@@ -129,7 +135,10 @@ class _BertQAExampleState extends State<BertQAExample> {
                     children: [
                       const Text(
                         'Answer:',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Container(

@@ -26,9 +26,9 @@ class _ModelManagerExampleState extends State<ModelManagerExample> {
       _modelManager = TfLiteModelManager();
       await _loadPredefinedModels();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to initialize: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to initialize: $e')));
     } finally {
       setState(() => _busy = false);
     }
@@ -60,9 +60,9 @@ class _ModelManagerExampleState extends State<ModelManagerExample> {
         }
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to unload model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to unload model: $e')));
     }
   }
 
@@ -74,114 +74,55 @@ class _ModelManagerExampleState extends State<ModelManagerExample> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: _busy
-        ? const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16),
-                Text('Initializing Model Manager...'),
-              ],
-            ),
-          )
-        : SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Advanced Model Management',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 8),
-                        const Text(
-                          'Manage multiple TensorFlow Lite models simultaneously with advanced configuration options.',
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            const Icon(Icons.memory, size: 16),
-                            const SizedBox(width: 8),
-                            Text('Loaded Models: ${_loadedModels.length}'),
-                            const Spacer(),
-                            const Icon(Icons.storage, size: 16),
-                            const SizedBox(width: 8),
-                            Text('Memory Usage: ${(_loadedModels.length * 25).toStringAsFixed(0)}MB'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Loaded Models',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 16),
-                        if (_loadedModels.isEmpty)
-                          const Text('No models loaded')
-                        else
-                          ..._loadedModels.map((modelId) {
-                            return Card(
-                              color: _selectedModel == modelId
-                                  ? Theme.of(context).primaryColor.withOpacity(0.1)
-                                  : null,
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: Theme.of(context).primaryColor,
-                                  child: Text(
-                                    modelId[0].toUpperCase(),
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                title: Text(modelId),
-                                subtitle: Text(_getModelTypeFromId(modelId)),
-                                trailing: PopupMenuButton<String>(
-                                  onSelected: (value) {
-                                    if (value == 'select') {
-                                      setState(() {
-                                        _selectedModel = modelId;
-                                      });
-                                    } else if (value == 'unload') {
-                                      _unloadModel(modelId);
-                                    }
-                                  },
-                                  itemBuilder: (context) => [
-                                    const PopupMenuItem(
-                                      value: 'select',
-                                      child: Text('Select'),
-                                    ),
-                                    const PopupMenuItem(
-                                      value: 'unload',
-                                      child: Text('Unload'),
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    _selectedModel = modelId;
-                                  });
-                                },
+          ? const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Initializing Model Manager...'),
+                ],
+              ),
+            )
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Advanced Model Management',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Manage multiple TensorFlow Lite models simultaneously with advanced configuration options.',
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              const Icon(Icons.memory, size: 16),
+                              const SizedBox(width: 8),
+                              Text('Loaded Models: ${_loadedModels.length}'),
+                              const Spacer(),
+                              const Icon(Icons.storage, size: 16),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Memory Usage: ${(_loadedModels.length * 25).toStringAsFixed(0)}MB',
                               ),
-                            );
-                          }),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                if (_selectedModel != null) ...[
                   const SizedBox(height: 16),
                   Card(
                     child: Padding(
@@ -189,56 +130,137 @@ class _ModelManagerExampleState extends State<ModelManagerExample> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Model Details: $_selectedModel',
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          const Text(
+                            'Loaded Models',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 16),
-                          _buildModelDetails(),
+                          if (_loadedModels.isEmpty)
+                            const Text('No models loaded')
+                          else
+                            ..._loadedModels.map((modelId) {
+                              return Card(
+                                color: _selectedModel == modelId
+                                    ? Theme.of(
+                                        context,
+                                      ).primaryColor.withOpacity(0.1)
+                                    : null,
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).primaryColor,
+                                    child: Text(
+                                      modelId[0].toUpperCase(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(modelId),
+                                  subtitle: Text(_getModelTypeFromId(modelId)),
+                                  trailing: PopupMenuButton<String>(
+                                    onSelected: (value) {
+                                      if (value == 'select') {
+                                        setState(() {
+                                          _selectedModel = modelId;
+                                        });
+                                      } else if (value == 'unload') {
+                                        _unloadModel(modelId);
+                                      }
+                                    },
+                                    itemBuilder: (context) => [
+                                      const PopupMenuItem(
+                                        value: 'select',
+                                        child: Text('Select'),
+                                      ),
+                                      const PopupMenuItem(
+                                        value: 'unload',
+                                        child: Text('Unload'),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedModel = modelId;
+                                    });
+                                  },
+                                ),
+                              );
+                            }),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (_selectedModel != null) ...[
+                    const SizedBox(height: 16),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Model Details: $_selectedModel',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildModelDetails(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 16),
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Model Manager Features',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          ...[
+                            'Multiple model support',
+                            'Dynamic model loading/unloading',
+                            'Memory optimization',
+                            'Configuration management',
+                            'Performance monitoring',
+                          ].map(
+                            (feature) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    size: 16,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(feature),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ],
-                const SizedBox(height: 16),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Model Manager Features',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 16),
-                        ...[
-                          'Multiple model support',
-                          'Dynamic model loading/unloading',
-                          'Memory optimization',
-                          'Configuration management',
-                          'Performance monitoring',
-                        ].map((feature) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                size: 16,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(feature),
-                            ],
-                          ),
-                        )),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
     );
   }
 
@@ -288,10 +310,7 @@ class _ModelManagerExampleState extends State<ModelManagerExample> {
             ),
           ),
           Expanded(
-            child: Text(
-              value,
-              style: TextStyle(color: Colors.grey[600]),
-            ),
+            child: Text(value, style: TextStyle(color: Colors.grey[600])),
           ),
         ],
       ),

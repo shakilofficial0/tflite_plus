@@ -11,7 +11,9 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version = await methodChannel.invokeMethod<String>(
+      'getPlatformVersion',
+    );
     return version;
   }
 
@@ -44,14 +46,15 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
     double threshold = 0.1,
     bool asynch = true,
   }) async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('detectObjectOnImage', {
-      'path': path,
-      'imageMean': imageMean,
-      'imageStd': imageStd,
-      'numResultsPerClass': numResultsPerClass,
-      'threshold': threshold,
-      'asynch': asynch,
-    });
+    final result = await methodChannel
+        .invokeMethod<List<dynamic>>('detectObjectOnImage', {
+          'path': path,
+          'imageMean': imageMean,
+          'imageStd': imageStd,
+          'numResultsPerClass': numResultsPerClass,
+          'threshold': threshold,
+          'asynch': asynch,
+        });
     return result;
   }
 
@@ -67,17 +70,18 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
     double threshold = 0.1,
     bool asynch = true,
   }) async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('detectObjectOnBinary', {
-      'bytesList': bytesList,
-      'imageHeight': imageHeight,
-      'imageWidth': imageWidth,
-      'imageMean': imageMean,
-      'imageStd': imageStd,
-      'rotation': rotation,
-      'numResultsPerClass': numResultsPerClass,
-      'threshold': threshold,
-      'asynch': asynch,
-    });
+    final result = await methodChannel
+        .invokeMethod<List<dynamic>>('detectObjectOnBinary', {
+          'bytesList': bytesList,
+          'imageHeight': imageHeight,
+          'imageWidth': imageWidth,
+          'imageMean': imageMean,
+          'imageStd': imageStd,
+          'rotation': rotation,
+          'numResultsPerClass': numResultsPerClass,
+          'threshold': threshold,
+          'asynch': asynch,
+        });
     return result;
   }
 
@@ -90,14 +94,15 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
     double imageStd = 1.0,
     bool asynch = true,
   }) async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('runModelOnImage', {
-      'path': path,
-      'numResults': numResults,
-      'threshold': threshold,
-      'imageMean': imageMean,
-      'imageStd': imageStd,
-      'asynch': asynch,
-    });
+    final result = await methodChannel
+        .invokeMethod<List<dynamic>>('runModelOnImage', {
+          'path': path,
+          'numResults': numResults,
+          'threshold': threshold,
+          'imageMean': imageMean,
+          'imageStd': imageStd,
+          'asynch': asynch,
+        });
     return result;
   }
 
@@ -112,16 +117,17 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
     double imageStd = 1.0,
     bool asynch = true,
   }) async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('runModelOnBinary', {
-      'bytesList': bytesList,
-      'imageHeight': imageHeight,
-      'imageWidth': imageWidth,
-      'numResults': numResults,
-      'threshold': threshold,
-      'imageMean': imageMean,
-      'imageStd': imageStd,
-      'asynch': asynch,
-    });
+    final result = await methodChannel
+        .invokeMethod<List<dynamic>>('runModelOnBinary', {
+          'bytesList': bytesList,
+          'imageHeight': imageHeight,
+          'imageWidth': imageWidth,
+          'numResults': numResults,
+          'threshold': threshold,
+          'imageMean': imageMean,
+          'imageStd': imageStd,
+          'asynch': asynch,
+        });
     return result;
   }
 
@@ -134,14 +140,15 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
     double imageStd = 127.5,
     bool asynch = true,
   }) async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('runPoseNetOnImage', {
-      'path': path,
-      'numResults': numResults,
-      'threshold': threshold,
-      'imageMean': imageMean,
-      'imageStd': imageStd,
-      'asynch': asynch,
-    });
+    final result = await methodChannel
+        .invokeMethod<List<dynamic>>('runPoseNetOnImage', {
+          'path': path,
+          'numResults': numResults,
+          'threshold': threshold,
+          'imageMean': imageMean,
+          'imageStd': imageStd,
+          'asynch': asynch,
+        });
     return result;
   }
 
@@ -156,16 +163,17 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
     double imageStd = 127.5,
     bool asynch = true,
   }) async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('runPoseNetOnBinary', {
-      'bytesList': bytesList,
-      'imageHeight': imageHeight,
-      'imageWidth': imageWidth,
-      'numResults': numResults,
-      'threshold': threshold,
-      'imageMean': imageMean,
-      'imageStd': imageStd,
-      'asynch': asynch,
-    });
+    final result = await methodChannel
+        .invokeMethod<List<dynamic>>('runPoseNetOnBinary', {
+          'bytesList': bytesList,
+          'imageHeight': imageHeight,
+          'imageWidth': imageWidth,
+          'numResults': numResults,
+          'threshold': threshold,
+          'imageMean': imageMean,
+          'imageStd': imageStd,
+          'asynch': asynch,
+        });
     return result;
   }
 
@@ -220,13 +228,17 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
 
   @override
   Future<List<int>?> getModelInputShape() async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('getModelInputShape');
+    final result = await methodChannel.invokeMethod<List<dynamic>>(
+      'getModelInputShape',
+    );
     return result?.cast<int>();
   }
 
   @override
   Future<List<int>?> getModelOutputShape() async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('getModelOutputShape');
+    final result = await methodChannel.invokeMethod<List<dynamic>>(
+      'getModelOutputShape',
+    );
     return result?.cast<int>();
   }
 
@@ -238,7 +250,9 @@ class MethodChannelTflitePlus extends TflitePlusPlatform {
 
   @override
   Future<List<String>?> getAvailableDelegates() async {
-    final result = await methodChannel.invokeMethod<List<dynamic>>('getAvailableDelegates');
+    final result = await methodChannel.invokeMethod<List<dynamic>>(
+      'getAvailableDelegates',
+    );
     return result?.cast<String>();
   }
 }

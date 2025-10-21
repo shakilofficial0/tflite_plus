@@ -5,16 +5,22 @@ class GestureClassificationExample extends StatefulWidget {
   const GestureClassificationExample({super.key});
 
   @override
-  State<GestureClassificationExample> createState() => _GestureClassificationExampleState();
+  State<GestureClassificationExample> createState() =>
+      _GestureClassificationExampleState();
 }
 
-class _GestureClassificationExampleState extends State<GestureClassificationExample> {
+class _GestureClassificationExampleState
+    extends State<GestureClassificationExample> {
   String? _currentGesture;
   double? _confidence;
   bool _isDetecting = false;
 
   final List<String> _gestures = [
-    'Open Palm', 'Closed Fist', 'Thumbs Up', 'Peace Sign', 'Pointing'
+    'Open Palm',
+    'Closed Fist',
+    'Thumbs Up',
+    'Peace Sign',
+    'Pointing',
   ];
 
   @override
@@ -33,20 +39,21 @@ class _GestureClassificationExampleState extends State<GestureClassificationExam
         useGpuDelegate: false,
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
   Future<void> _startDetection() async {
     setState(() => _isDetecting = true);
-    
+
     // Simulate gesture detection
     await Future.delayed(const Duration(seconds: 2));
-    
+
     setState(() {
-      _currentGesture = _gestures[DateTime.now().millisecond % _gestures.length];
+      _currentGesture =
+          _gestures[DateTime.now().millisecond % _gestures.length];
       _confidence = 0.7 + (DateTime.now().millisecond % 30) / 100;
       _isDetecting = false;
     });
@@ -70,10 +77,15 @@ class _GestureClassificationExampleState extends State<GestureClassificationExam
                   children: [
                     const Text(
                       'Hand Gesture Recognition',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    const Text('Detect and classify hand gestures in real-time.'),
+                    const Text(
+                      'Detect and classify hand gestures in real-time.',
+                    ),
                     const SizedBox(height: 32),
                     Container(
                       width: 200,
@@ -127,14 +139,19 @@ class _GestureClassificationExampleState extends State<GestureClassificationExam
                     children: [
                       const Text(
                         'Detected Gesture',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 16),
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                          color: Theme.of(
+                            context,
+                          ).primaryColor.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Column(
@@ -168,23 +185,28 @@ class _GestureClassificationExampleState extends State<GestureClassificationExam
                   children: [
                     const Text(
                       'Supported Gestures',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    ..._gestures.map((gesture) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.check_circle_outline,
-                            size: 16,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(gesture),
-                        ],
+                    ..._gestures.map(
+                      (gesture) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 16,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(gesture),
+                          ],
+                        ),
                       ),
-                    )),
+                    ),
                   ],
                 ),
               ),

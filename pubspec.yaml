@@ -13,9 +13,7 @@ topics:
   - tensorflow
   - litert
   - ai
-  - computer-vision
   - object-detection
-  - image-classification
 
 environment:
   sdk: ^3.9.2

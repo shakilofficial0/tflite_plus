@@ -5,7 +5,8 @@ class TextClassificationExample extends StatefulWidget {
   const TextClassificationExample({super.key});
 
   @override
-  State<TextClassificationExample> createState() => _TextClassificationExampleState();
+  State<TextClassificationExample> createState() =>
+      _TextClassificationExampleState();
 }
 
 class _TextClassificationExampleState extends State<TextClassificationExample> {
@@ -36,15 +37,15 @@ class _TextClassificationExampleState extends State<TextClassificationExample> {
         useGpuDelegate: false,
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
   Future<void> _classifyText(String text) async {
     if (text.trim().isEmpty) return;
-    
+
     setState(() => _busy = true);
     try {
       var results = await TflitePlus.runModelOnImage(
@@ -58,9 +59,9 @@ class _TextClassificationExampleState extends State<TextClassificationExample> {
       });
     } catch (e) {
       setState(() => _busy = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Classification failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Classification failed: $e')));
     }
   }
 
@@ -82,7 +83,10 @@ class _TextClassificationExampleState extends State<TextClassificationExample> {
                   children: [
                     const Text(
                       'Sentiment Analysis',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text('Analyze sentiment and classify text content.'),
@@ -97,7 +101,9 @@ class _TextClassificationExampleState extends State<TextClassificationExample> {
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton.icon(
-                      onPressed: _busy ? null : () => _classifyText(_textController.text),
+                      onPressed: _busy
+                          ? null
+                          : () => _classifyText(_textController.text),
                       icon: const Icon(Icons.analytics),
                       label: const Text('Classify Text'),
                     ),
@@ -114,27 +120,35 @@ class _TextClassificationExampleState extends State<TextClassificationExample> {
                   children: [
                     const Text(
                       'Sample Texts',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    ..._sampleTexts.map((text) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: InkWell(
-                        onTap: () {
-                          _textController.text = text;
-                          _classifyText(text);
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey[300]!),
-                            borderRadius: BorderRadius.circular(8),
+                    ..._sampleTexts.map(
+                      (text) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: InkWell(
+                          onTap: () {
+                            _textController.text = text;
+                            _classifyText(text);
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              text,
+                              style: const TextStyle(fontSize: 14),
+                            ),
                           ),
-                          child: Text(text, style: const TextStyle(fontSize: 14)),
                         ),
                       ),
-                    )),
+                    ),
                   ],
                 ),
               ),
@@ -157,16 +171,23 @@ class _TextClassificationExampleState extends State<TextClassificationExample> {
                       else ...[
                         const Text(
                           'Classification Results',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 8),
-                        ..._results!.map((result) => ListTile(
-                          title: Text(result['label'] ?? 'Unknown'),
-                          trailing: Text(
-                            '${((result['confidence'] ?? 0.0) * 100).toStringAsFixed(1)}%',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                        ..._results!.map(
+                          (result) => ListTile(
+                            title: Text(result['label'] ?? 'Unknown'),
+                            trailing: Text(
+                              '${((result['confidence'] ?? 0.0) * 100).toStringAsFixed(1)}%',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        )),
+                        ),
                       ],
                     ],
                   ),

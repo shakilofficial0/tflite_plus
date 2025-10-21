@@ -8,7 +8,8 @@ class ImageSegmentationExample extends StatefulWidget {
   const ImageSegmentationExample({super.key});
 
   @override
-  State<ImageSegmentationExample> createState() => _ImageSegmentationExampleState();
+  State<ImageSegmentationExample> createState() =>
+      _ImageSegmentationExampleState();
 }
 
 class _ImageSegmentationExampleState extends State<ImageSegmentationExample> {
@@ -34,9 +35,9 @@ class _ImageSegmentationExampleState extends State<ImageSegmentationExample> {
       print('Image segmentation model loaded successfully');
     } catch (e) {
       print('Failed to load model: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
@@ -61,9 +62,9 @@ class _ImageSegmentationExampleState extends State<ImageSegmentationExample> {
       setState(() {
         _busy = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Segmentation failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Segmentation failed: $e')));
     }
   }
 
@@ -101,7 +102,10 @@ class _ImageSegmentationExampleState extends State<ImageSegmentationExample> {
                   children: [
                     const Text(
                       'DeepLab v3 Image Segmentation',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text(
@@ -113,12 +117,16 @@ class _ImageSegmentationExampleState extends State<ImageSegmentationExample> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: _busy ? null : () => _pickImage(ImageSource.camera),
+                          onPressed: _busy
+                              ? null
+                              : () => _pickImage(ImageSource.camera),
                           icon: const Icon(Icons.camera_alt),
                           label: const Text('Camera'),
                         ),
                         ElevatedButton.icon(
-                          onPressed: _busy ? null : () => _pickImage(ImageSource.gallery),
+                          onPressed: _busy
+                              ? null
+                              : () => _pickImage(ImageSource.gallery),
                           icon: const Icon(Icons.photo_library),
                           label: const Text('Gallery'),
                         ),
@@ -156,7 +164,10 @@ class _ImageSegmentationExampleState extends State<ImageSegmentationExample> {
                       else if (_recognitions != null) ...[
                         const Text(
                           'Segmentation Complete',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Text(

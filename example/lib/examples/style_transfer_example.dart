@@ -19,10 +19,26 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
   String _selectedStyle = 'mosaic';
 
   final List<Map<String, String>> _styles = [
-    {'name': 'Mosaic', 'model': 'style_mosaic_transfer_int8.tflite', 'key': 'mosaic'},
-    {'name': 'Pointilism', 'model': 'style_pointilism_transfer_int8.tflite', 'key': 'pointilism'},
-    {'name': 'Candy', 'model': 'style_candy_transfer_int8.tflite', 'key': 'candy'},
-    {'name': 'Udnie', 'model': 'style_udnie_transfer_int8.tflite', 'key': 'udnie'},
+    {
+      'name': 'Mosaic',
+      'model': 'style_mosaic_transfer_int8.tflite',
+      'key': 'mosaic',
+    },
+    {
+      'name': 'Pointilism',
+      'model': 'style_pointilism_transfer_int8.tflite',
+      'key': 'pointilism',
+    },
+    {
+      'name': 'Candy',
+      'model': 'style_candy_transfer_int8.tflite',
+      'key': 'candy',
+    },
+    {
+      'name': 'Udnie',
+      'model': 'style_udnie_transfer_int8.tflite',
+      'key': 'udnie',
+    },
   ];
 
   @override
@@ -36,7 +52,7 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
       final selectedStyleModel = _styles.firstWhere(
         (style) => style['key'] == _selectedStyle,
       )['model']!;
-      
+
       await TflitePlus.loadModel(
         model: 'assets/models/$selectedStyleModel',
         isAsset: true,
@@ -46,9 +62,9 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
       print('Style transfer model loaded successfully: $_selectedStyle');
     } catch (e) {
       print('Failed to load model: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
@@ -77,9 +93,9 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
       setState(() {
         _busy = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Style transfer failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Style transfer failed: $e')));
     }
   }
 
@@ -118,7 +134,10 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
                   children: [
                     const Text(
                       'Neural Style Transfer',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text(
@@ -129,17 +148,19 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
                     DropdownButton<String>(
                       value: _selectedStyle,
                       isExpanded: true,
-                      onChanged: _busy ? null : (String? newValue) async {
-                        if (newValue != null) {
-                          setState(() {
-                            _selectedStyle = newValue;
-                          });
-                          await _loadModel();
-                          if (_image != null) {
-                            await _runStyleTransfer(_image!);
-                          }
-                        }
-                      },
+                      onChanged: _busy
+                          ? null
+                          : (String? newValue) async {
+                              if (newValue != null) {
+                                setState(() {
+                                  _selectedStyle = newValue;
+                                });
+                                await _loadModel();
+                                if (_image != null) {
+                                  await _runStyleTransfer(_image!);
+                                }
+                              }
+                            },
                       items: _styles.map<DropdownMenuItem<String>>((style) {
                         return DropdownMenuItem<String>(
                           value: style['key'],
@@ -152,12 +173,16 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: _busy ? null : () => _pickImage(ImageSource.camera),
+                          onPressed: _busy
+                              ? null
+                              : () => _pickImage(ImageSource.camera),
                           icon: const Icon(Icons.camera_alt),
                           label: const Text('Camera'),
                         ),
                         ElevatedButton.icon(
-                          onPressed: _busy ? null : () => _pickImage(ImageSource.gallery),
+                          onPressed: _busy
+                              ? null
+                              : () => _pickImage(ImageSource.gallery),
                           icon: const Icon(Icons.photo_library),
                           label: const Text('Gallery'),
                         ),
@@ -202,7 +227,9 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
                               children: [
                                 Text(
                                   'Styled (${_styles.firstWhere((s) => s['key'] == _selectedStyle)['name']})',
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 const SizedBox(height: 8),
                                 if (_busy)
@@ -214,7 +241,8 @@ class _StyleTransferExampleState extends State<StyleTransferExample> {
                                     ),
                                     child: const Center(
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           CircularProgressIndicator(),
                                           SizedBox(height: 8),

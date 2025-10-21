@@ -31,9 +31,9 @@ class _SuperResolutionExampleState extends State<SuperResolutionExample> {
         useGpuDelegate: false,
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
@@ -48,9 +48,9 @@ class _SuperResolutionExampleState extends State<SuperResolutionExample> {
       setState(() => _busy = false);
     } catch (e) {
       setState(() => _busy = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Enhancement failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Enhancement failed: $e')));
     }
   }
 
@@ -80,7 +80,10 @@ class _SuperResolutionExampleState extends State<SuperResolutionExample> {
                   children: [
                     const Text(
                       'ESRGAN Super Resolution',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text('Enhance image resolution using ESRGAN model.'),
@@ -89,12 +92,16 @@ class _SuperResolutionExampleState extends State<SuperResolutionExample> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: _busy ? null : () => _pickImage(ImageSource.camera),
+                          onPressed: _busy
+                              ? null
+                              : () => _pickImage(ImageSource.camera),
                           icon: const Icon(Icons.camera_alt),
                           label: const Text('Camera'),
                         ),
                         ElevatedButton.icon(
-                          onPressed: _busy ? null : () => _pickImage(ImageSource.gallery),
+                          onPressed: _busy
+                              ? null
+                              : () => _pickImage(ImageSource.gallery),
                           icon: const Icon(Icons.photo_library),
                           label: const Text('Gallery'),
                         ),
@@ -110,14 +117,14 @@ class _SuperResolutionExampleState extends State<SuperResolutionExample> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: _busy
-                    ? const Column(
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 8),
-                          Text('Enhancing resolution...'),
-                        ],
-                      )
-                    : Image.file(_image!, height: 300, fit: BoxFit.contain),
+                      ? const Column(
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 8),
+                            Text('Enhancing resolution...'),
+                          ],
+                        )
+                      : Image.file(_image!, height: 300, fit: BoxFit.contain),
                 ),
               ),
             ],

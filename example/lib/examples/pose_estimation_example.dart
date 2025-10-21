@@ -34,9 +34,9 @@ class _PoseEstimationExampleState extends State<PoseEstimationExample> {
       print('Pose estimation model loaded successfully');
     } catch (e) {
       print('Failed to load model: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
@@ -63,9 +63,9 @@ class _PoseEstimationExampleState extends State<PoseEstimationExample> {
       setState(() {
         _busy = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Pose estimation failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Pose estimation failed: $e')));
     }
   }
 
@@ -114,7 +114,7 @@ class _PoseEstimationExampleState extends State<PoseEstimationExample> {
             final x = keypoint['x'] ?? 0.0;
             final y = keypoint['y'] ?? 0.0;
             final confidence = keypoint['confidence'] ?? 0.0;
-            
+
             if (confidence > 0.3) {
               return Positioned(
                 left: x * 400 - 3,
@@ -161,7 +161,10 @@ class _PoseEstimationExampleState extends State<PoseEstimationExample> {
                   children: [
                     const Text(
                       'PoseNet Human Pose Estimation',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text(
@@ -209,7 +212,10 @@ class _PoseEstimationExampleState extends State<PoseEstimationExample> {
                         if (_recognitions != null) ...[
                           const Text(
                             'Pose Analysis Results:',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 8),
                           if (_recognitions!.isEmpty)
@@ -217,22 +223,33 @@ class _PoseEstimationExampleState extends State<PoseEstimationExample> {
                           else
                             ..._recognitions!.map((pose) {
                               final score = pose['score'] ?? 0.0;
-                              final keypoints = pose['keypoints'] as List<dynamic>? ?? [];
+                              final keypoints =
+                                  pose['keypoints'] as List<dynamic>? ?? [];
                               final visibleKeypoints = keypoints
-                                  .where((kp) => (kp['confidence'] ?? 0.0) > 0.3)
+                                  .where(
+                                    (kp) => (kp['confidence'] ?? 0.0) > 0.3,
+                                  )
                                   .length;
-                              
+
                               return Card(
                                 color: Theme.of(context).colorScheme.surface,
                                 child: ListTile(
-                                  title: Text('Pose ${_recognitions!.indexOf(pose) + 1}'),
-                                  subtitle: Text('$visibleKeypoints visible keypoints'),
+                                  title: Text(
+                                    'Pose ${_recognitions!.indexOf(pose) + 1}',
+                                  ),
+                                  subtitle: Text(
+                                    '$visibleKeypoints visible keypoints',
+                                  ),
                                   trailing: Text(
                                     '${(score * 100).toStringAsFixed(1)}%',
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   leading: CircleAvatar(
-                                    backgroundColor: Theme.of(context).primaryColor,
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).primaryColor,
                                     child: const Icon(
                                       Icons.accessibility,
                                       color: Colors.white,

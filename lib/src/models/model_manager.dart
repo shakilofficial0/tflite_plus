@@ -60,7 +60,7 @@ class TfLiteModelManager {
     }
 
     final model = _loadedModels[modelId]!;
-    
+
     // Reload the model if it's not the current one
     if (_currentModelId != modelId) {
       await loadModel(model.config);
@@ -87,8 +87,8 @@ class TfLiteModelManager {
 
   /// Check if a model is loaded
   static bool isModelLoaded(String modelId) {
-    return _loadedModels.containsKey(modelId) && 
-           _loadedModels[modelId]!.isLoaded;
+    return _loadedModels.containsKey(modelId) &&
+        _loadedModels[modelId]!.isLoaded;
   }
 
   /// Close a specific model
@@ -123,18 +123,9 @@ class PredefinedModels {
     modelPath: 'assets/models/mobilenet_v1_1.0_224.tflite',
     labelsPath: 'assets/models/mobilenet_v1_1.0_224_labels.txt',
     modelType: ModelType.imageClassification,
-    inputConfig: ModelInputConfig(
-      width: 224,
-      height: 224,
-      channels: 3,
-    ),
-    outputConfig: ModelOutputConfig(
-      numClasses: 1000,
-    ),
-    preprocessingConfig: PreprocessingConfig(
-      imageMean: 117.0,
-      imageStd: 1.0,
-    ),
+    inputConfig: ModelInputConfig(width: 224, height: 224, channels: 3),
+    outputConfig: ModelOutputConfig(numClasses: 1000),
+    preprocessingConfig: PreprocessingConfig(imageMean: 117.0, imageStd: 1.0),
   );
 
   /// MobileNet SSD for object detection
@@ -143,19 +134,9 @@ class PredefinedModels {
     modelPath: 'assets/models/ssd_mobilenet_v1_1_metadata_1.tflite',
     labelsPath: 'assets/models/ssd_mobilenet_v1_1_labels.txt',
     modelType: ModelType.objectDetection,
-    inputConfig: ModelInputConfig(
-      width: 300,
-      height: 300,
-      channels: 3,
-    ),
-    outputConfig: ModelOutputConfig(
-      numClasses: 91,
-      hasBoundingBoxes: true,
-    ),
-    preprocessingConfig: PreprocessingConfig(
-      imageMean: 127.5,
-      imageStd: 127.5,
-    ),
+    inputConfig: ModelInputConfig(width: 300, height: 300, channels: 3),
+    outputConfig: ModelOutputConfig(numClasses: 91, hasBoundingBoxes: true),
+    preprocessingConfig: PreprocessingConfig(imageMean: 127.5, imageStd: 127.5),
   );
 
   /// PoseNet for pose estimation
@@ -163,18 +144,9 @@ class PredefinedModels {
     id: 'posenet',
     modelPath: 'assets/models/posenet_model.tflite',
     modelType: ModelType.poseEstimation,
-    inputConfig: ModelInputConfig(
-      width: 257,
-      height: 257,
-      channels: 3,
-    ),
-    outputConfig: ModelOutputConfig(
-      hasKeypoints: true,
-    ),
-    preprocessingConfig: PreprocessingConfig(
-      imageMean: 127.5,
-      imageStd: 127.5,
-    ),
+    inputConfig: ModelInputConfig(width: 257, height: 257, channels: 3),
+    outputConfig: ModelOutputConfig(hasKeypoints: true),
+    preprocessingConfig: PreprocessingConfig(imageMean: 127.5, imageStd: 127.5),
   );
 
   /// DeepLab for image segmentation
@@ -182,19 +154,9 @@ class PredefinedModels {
     id: 'deeplabv3',
     modelPath: 'assets/models/deeplabv3_257_mv_gpu.tflite',
     modelType: ModelType.imageSegmentation,
-    inputConfig: ModelInputConfig(
-      width: 257,
-      height: 257,
-      channels: 3,
-    ),
-    outputConfig: ModelOutputConfig(
-      numClasses: 21,
-      isSegmentation: true,
-    ),
-    preprocessingConfig: PreprocessingConfig(
-      imageMean: 127.5,
-      imageStd: 127.5,
-    ),
+    inputConfig: ModelInputConfig(width: 257, height: 257, channels: 3),
+    outputConfig: ModelOutputConfig(numClasses: 21, isSegmentation: true),
+    preprocessingConfig: PreprocessingConfig(imageMean: 127.5, imageStd: 127.5),
   );
 
   /// BERT for question answering
@@ -238,9 +200,7 @@ class PredefinedModels {
       height: 1,
       channels: 1,
     ),
-    outputConfig: ModelOutputConfig(
-      numClasses: 521,
-    ),
+    outputConfig: ModelOutputConfig(numClasses: 521),
   );
 
   /// Gesture classification model
@@ -249,14 +209,8 @@ class PredefinedModels {
     modelPath: 'assets/models/gesture_classifier.tflite',
     labelsPath: 'assets/models/gesture_labels.txt',
     modelType: ModelType.gestureClassification,
-    inputConfig: ModelInputConfig(
-      width: 224,
-      height: 224,
-      channels: 3,
-    ),
-    outputConfig: ModelOutputConfig(
-      numClasses: 4,
-    ),
+    inputConfig: ModelInputConfig(width: 224, height: 224, channels: 3),
+    outputConfig: ModelOutputConfig(numClasses: 4),
   );
 
   /// Digit classification model (MNIST)
@@ -264,30 +218,18 @@ class PredefinedModels {
     id: 'digit_classification',
     modelPath: 'assets/models/mnist_model.tflite',
     modelType: ModelType.digitClassification,
-    inputConfig: ModelInputConfig(
-      width: 28,
-      height: 28,
-      channels: 1,
-    ),
-    outputConfig: ModelOutputConfig(
-      numClasses: 10,
-    ),
-    preprocessingConfig: PreprocessingConfig(
-      imageMean: 0.0,
-      imageStd: 255.0,
-    ),
+    inputConfig: ModelInputConfig(width: 28, height: 28, channels: 1),
+    outputConfig: ModelOutputConfig(numClasses: 10),
+    preprocessingConfig: PreprocessingConfig(imageMean: 0.0, imageStd: 255.0),
   );
 
   /// Style transfer model
   static const styleTransfer = TfLiteModelConfig(
     id: 'style_transfer',
-    modelPath: 'assets/models/magenta_arbitrary-image-stylization-v1-256_int8_prediction_1.tflite',
+    modelPath:
+        'assets/models/magenta_arbitrary-image-stylization-v1-256_int8_prediction_1.tflite',
     modelType: ModelType.styleTransfer,
-    inputConfig: ModelInputConfig(
-      width: 256,
-      height: 256,
-      channels: 3,
-    ),
+    inputConfig: ModelInputConfig(width: 256, height: 256, channels: 3),
     outputConfig: ModelOutputConfig(),
   );
 
@@ -296,11 +238,7 @@ class PredefinedModels {
     id: 'super_resolution',
     modelPath: 'assets/models/esrgan-tf2_1.tflite',
     modelType: ModelType.superResolution,
-    inputConfig: ModelInputConfig(
-      width: 50,
-      height: 50,
-      channels: 3,
-    ),
+    inputConfig: ModelInputConfig(width: 50, height: 50, channels: 3),
     outputConfig: ModelOutputConfig(),
   );
 

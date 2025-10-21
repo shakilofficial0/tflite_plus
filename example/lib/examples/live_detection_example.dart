@@ -38,21 +38,23 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
       print('Live detection model loaded successfully');
     } catch (e) {
       print('Failed to load model: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
   void _startDetection() {
     if (!_isModelLoaded) return;
-    
+
     setState(() {
       _isDetecting = true;
     });
 
     // Simulate live detection with periodic updates
-    _simulationTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    _simulationTimer = Timer.periodic(const Duration(milliseconds: 500), (
+      timer,
+    ) {
       if (!_isDetecting) {
         timer.cancel();
         return;
@@ -70,11 +72,19 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
 
   void _simulateDetection() {
     final random = math.Random();
-    
+
     // Simulate detected objects
-    final objects = ['person', 'car', 'bicycle', 'dog', 'cat', 'bottle', 'chair'];
+    final objects = [
+      'person',
+      'car',
+      'bicycle',
+      'dog',
+      'cat',
+      'bottle',
+      'chair',
+    ];
     final numObjects = random.nextInt(3) + 1;
-    
+
     List<dynamic> detections = [];
     for (int i = 0; i < numObjects; i++) {
       detections.add({
@@ -110,10 +120,7 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
             height: rect['h'] * 400,
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.green,
-                  width: 2,
-                ),
+                border: Border.all(color: Colors.green, width: 2),
               ),
               child: Align(
                 alignment: Alignment.topLeft,
@@ -122,10 +129,7 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
                   padding: const EdgeInsets.all(2),
                   child: Text(
                     '${recognition['detectedClass']} ${((recognition['confidenceInClass'] ?? 0.0) * 100).toStringAsFixed(0)}%',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               ),
@@ -168,7 +172,10 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
                   children: [
                     const Text(
                       'Simulated Live Detection',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text(
@@ -180,11 +187,15 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          _isModelLoaded ? Icons.check_circle : Icons.hourglass_empty,
+                          _isModelLoaded
+                              ? Icons.check_circle
+                              : Icons.hourglass_empty,
                           color: _isModelLoaded ? Colors.green : Colors.orange,
                         ),
                         const SizedBox(width: 8),
-                        Text(_isModelLoaded ? 'Model Ready' : 'Loading Model...'),
+                        Text(
+                          _isModelLoaded ? 'Model Ready' : 'Loading Model...',
+                        ),
                       ],
                     ),
                   ],
@@ -203,7 +214,10 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
                         children: [
                           const Text(
                             'Detection View',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -238,31 +252,32 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
                             children: [
                               Center(
                                 child: _isDetecting
-                                  ? const Text(
-                                      'Simulated Camera Feed',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    )
-                                  : const Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.videocam_off,
-                                          size: 48,
+                                    ? const Text(
+                                        'Simulated Camera Feed',
+                                        style: TextStyle(
+                                          fontSize: 16,
                                           color: Colors.grey,
                                         ),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'Detection Stopped',
-                                          style: TextStyle(
-                                            fontSize: 16,
+                                      )
+                                    : const Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.videocam_off,
+                                            size: 48,
                                             color: Colors.grey,
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                          SizedBox(height: 8),
+                                          Text(
+                                            'Detection Stopped',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                               ),
                               if (_isDetecting) _buildBoundingBoxes(),
                             ],
@@ -289,14 +304,19 @@ class _LiveDetectionExampleState extends State<LiveDetectionExample> {
                               ),
                             ),
                             const SizedBox(height: 4),
-                            if (_recognitions != null && _recognitions!.isNotEmpty) ...[
-                              ...(_recognitions!.take(3).map((recognition) => Text(
-                                '• ${recognition['detectedClass']} (${((recognition['confidenceInClass'] ?? 0.0) * 100).toStringAsFixed(1)}%)',
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 12,
-                                ),
-                              ))),
+                            if (_recognitions != null &&
+                                _recognitions!.isNotEmpty) ...[
+                              ...(_recognitions!
+                                  .take(3)
+                                  .map(
+                                    (recognition) => Text(
+                                      '• ${recognition['detectedClass']} (${((recognition['confidenceInClass'] ?? 0.0) * 100).toStringAsFixed(1)}%)',
+                                      style: const TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  )),
                             ] else
                               const Text(
                                 'No objects detected',

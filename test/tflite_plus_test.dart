@@ -9,7 +9,6 @@ import 'package:tflite_plus/tflite_plus_platform_interface.dart';
 class MockTflitePlusPlatform
     with MockPlatformInterfaceMixin
     implements TflitePlusPlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 
@@ -35,8 +34,8 @@ class MockTflitePlusPlatform
     {
       'label': 'test_object',
       'confidence': 0.85,
-      'rect': {'x': 0.1, 'y': 0.2, 'w': 0.3, 'h': 0.4}
-    }
+      'rect': {'x': 0.1, 'y': 0.2, 'w': 0.3, 'h': 0.4},
+    },
   ]);
 
   @override
@@ -61,11 +60,7 @@ class MockTflitePlusPlatform
     double imageStd = 1.0,
     bool asynch = true,
   }) => Future.value([
-    {
-      'label': 'test_class',
-      'confidence': 0.92,
-      'index': 0
-    }
+    {'label': 'test_class', 'confidence': 0.92, 'index': 0},
   ]);
 
   @override
@@ -91,9 +86,9 @@ class MockTflitePlusPlatform
   }) => Future.value([
     {
       'keypoints': [
-        {'x': 0.5, 'y': 0.3, 'part': 'nose', 'confidence': 0.9}
-      ]
-    }
+        {'x': 0.5, 'y': 0.3, 'part': 'nose', 'confidence': 0.9},
+      ],
+    },
   ]);
 
   @override
@@ -183,9 +178,7 @@ void main() {
     });
 
     test('runModelOnImage', () async {
-      final results = await TflitePlus.runModelOnImage(
-        path: 'test_image.jpg',
-      );
+      final results = await TflitePlus.runModelOnImage(path: 'test_image.jpg');
       expect(results, isNotEmpty);
       expect(results!.first['label'], 'test_class');
       expect(results.first['confidence'], 0.92);

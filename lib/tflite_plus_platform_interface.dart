@@ -62,7 +62,9 @@ abstract class TflitePlusPlatform extends PlatformInterface {
     double threshold = 0.1,
     bool asynch = true,
   }) {
-    throw UnimplementedError('detectObjectOnBinary() has not been implemented.');
+    throw UnimplementedError(
+      'detectObjectOnBinary() has not been implemented.',
+    );
   }
 
   Future<List<dynamic>?> runModelOnImage({
@@ -121,7 +123,9 @@ abstract class TflitePlusPlatform extends PlatformInterface {
     String outputType = "png",
     bool asynch = true,
   }) {
-    throw UnimplementedError('runSegmentationOnImage() has not been implemented.');
+    throw UnimplementedError(
+      'runSegmentationOnImage() has not been implemented.',
+    );
   }
 
   Future<dynamic> runSegmentationOnBinary({
@@ -134,7 +138,9 @@ abstract class TflitePlusPlatform extends PlatformInterface {
     String outputType = "png",
     bool asynch = true,
   }) {
-    throw UnimplementedError('runSegmentationOnBinary() has not been implemented.');
+    throw UnimplementedError(
+      'runSegmentationOnBinary() has not been implemented.',
+    );
   }
 
   Future<void> close() {
@@ -154,6 +160,8 @@ abstract class TflitePlusPlatform extends PlatformInterface {
   }
 
   Future<List<String>?> getAvailableDelegates() {
-    throw UnimplementedError('getAvailableDelegates() has not been implemented.');
+    throw UnimplementedError(
+      'getAvailableDelegates() has not been implemented.',
+    );
   }
 }

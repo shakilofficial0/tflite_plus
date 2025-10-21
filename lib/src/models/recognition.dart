@@ -2,18 +2,14 @@
 class Recognition {
   /// The classification label
   final String? label;
-  
+
   /// The confidence score (0.0 to 1.0)
   final double? confidence;
-  
+
   /// The index of the recognized class
   final int? index;
 
-  Recognition({
-    this.label,
-    this.confidence,
-    this.index,
-  });
+  Recognition({this.label, this.confidence, this.index});
 
   /// Create Recognition from JSON
   factory Recognition.fromJson(Map<String, dynamic> json) {
@@ -26,11 +22,7 @@ class Recognition {
 
   /// Convert Recognition to JSON
   Map<String, dynamic> toJson() {
-    return {
-      'label': label,
-      'confidence': confidence,
-      'index': index,
-    };
+    return {'label': label, 'confidence': confidence, 'index': index};
   }
 
   @override

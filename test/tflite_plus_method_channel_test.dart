@@ -9,49 +9,44 @@ void main() {
   const MethodChannel channel = MethodChannel('tflite_plus');
 
   setUp(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-      channel,
-      (MethodCall methodCall) async {
-        switch (methodCall.method) {
-          case 'getPlatformVersion':
-            return '42';
-          case 'loadModel':
-            return 'Model loaded successfully';
-          case 'detectObjectOnImage':
-            return [
-              {
-                'label': 'test_object',
-                'confidence': 0.85,
-                'rect': {'x': 0.1, 'y': 0.2, 'w': 0.3, 'h': 0.4}
-              }
-            ];
-          case 'runModelOnImage':
-            return [
-              {
-                'label': 'test_class',
-                'confidence': 0.92,
-                'index': 0
-              }
-            ];
-          case 'getModelInputShape':
-            return [1, 224, 224, 3];
-          case 'getModelOutputShape':
-            return [1, 1000];
-          case 'isModelLoaded':
-            return true;
-          case 'getAvailableDelegates':
-            return ['CPU', 'GPU'];
-          case 'close':
-            return null;
-          default:
-            return null;
-        }
-      },
-    );
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+          switch (methodCall.method) {
+            case 'getPlatformVersion':
+              return '42';
+            case 'loadModel':
+              return 'Model loaded successfully';
+            case 'detectObjectOnImage':
+              return [
+                {
+                  'label': 'test_object',
+                  'confidence': 0.85,
+                  'rect': {'x': 0.1, 'y': 0.2, 'w': 0.3, 'h': 0.4},
+                },
+              ];
+            case 'runModelOnImage':
+              return [
+                {'label': 'test_class', 'confidence': 0.92, 'index': 0},
+              ];
+            case 'getModelInputShape':
+              return [1, 224, 224, 3];
+            case 'getModelOutputShape':
+              return [1, 1000];
+            case 'isModelLoaded':
+              return true;
+            case 'getAvailableDelegates':
+              return ['CPU', 'GPU'];
+            case 'close':
+              return null;
+            default:
+              return null;
+          }
+        });
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
   });
 
   test('getPlatformVersion', () async {
@@ -67,17 +62,13 @@ void main() {
   });
 
   test('detectObjectOnImage', () async {
-    final results = await platform.detectObjectOnImage(
-      path: 'test_image.jpg',
-    );
+    final results = await platform.detectObjectOnImage(path: 'test_image.jpg');
     expect(results, isNotEmpty);
     expect(results!.first['label'], 'test_object');
   });
 
   test('runModelOnImage', () async {
-    final results = await platform.runModelOnImage(
-      path: 'test_image.jpg',
-    );
+    final results = await platform.runModelOnImage(path: 'test_image.jpg');
     expect(results, isNotEmpty);
     expect(results!.first['label'], 'test_class');
   });

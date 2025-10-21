@@ -2,13 +2,13 @@
 class Keypoint {
   /// X coordinate of the keypoint
   final double x;
-  
+
   /// Y coordinate of the keypoint
   final double y;
-  
+
   /// Confidence score of the keypoint (0.0 to 1.0)
   final double confidence;
-  
+
   /// Name of the body part
   final String? part;
 
@@ -31,12 +31,7 @@ class Keypoint {
 
   /// Convert Keypoint to JSON
   Map<String, dynamic> toJson() {
-    return {
-      'x': x,
-      'y': y,
-      'confidence': confidence,
-      'part': part,
-    };
+    return {'x': x, 'y': y, 'confidence': confidence, 'part': part};
   }
 
   @override
@@ -64,14 +59,11 @@ class Keypoint {
 class Pose {
   /// List of keypoints that make up the pose
   final List<Keypoint> keypoints;
-  
+
   /// Overall confidence score of the pose (0.0 to 1.0)
   final double? confidence;
 
-  Pose({
-    required this.keypoints,
-    this.confidence,
-  });
+  Pose({required this.keypoints, this.confidence});
 
   /// Create Pose from JSON
   factory Pose.fromJson(Map<String, dynamic> json) {
@@ -79,7 +71,7 @@ class Pose {
     final keypoints = keypointsJson
         .map((e) => Keypoint.fromJson(e as Map<String, dynamic>))
         .toList();
-    
+
     return Pose(
       keypoints: keypoints,
       confidence: (json['confidence'] as num?)?.toDouble(),

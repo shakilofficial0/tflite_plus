@@ -7,10 +7,12 @@ class DigitClassificationExample extends StatefulWidget {
   const DigitClassificationExample({super.key});
 
   @override
-  State<DigitClassificationExample> createState() => _DigitClassificationExampleState();
+  State<DigitClassificationExample> createState() =>
+      _DigitClassificationExampleState();
 }
 
-class _DigitClassificationExampleState extends State<DigitClassificationExample> {
+class _DigitClassificationExampleState
+    extends State<DigitClassificationExample> {
   List<List<double>> _drawingPoints = [];
   List<Offset?> _currentPath = [];
   String? _prediction;
@@ -32,25 +34,25 @@ class _DigitClassificationExampleState extends State<DigitClassificationExample>
         useGpuDelegate: false,
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load model: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to load model: $e')));
     }
   }
 
   Future<void> _classifyDrawing() async {
     if (_drawingPoints.isEmpty) return;
-    
+
     setState(() => _busy = true);
-    
+
     try {
       // Simulate MNIST classification
       await Future.delayed(const Duration(milliseconds: 500));
-      
+
       final random = math.Random();
       final digit = random.nextInt(10);
       final confidence = 0.85 + random.nextDouble() * 0.14;
-      
+
       setState(() {
         _prediction = digit.toString();
         _confidence = confidence;
@@ -58,9 +60,9 @@ class _DigitClassificationExampleState extends State<DigitClassificationExample>
       });
     } catch (e) {
       setState(() => _busy = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Classification failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Classification failed: $e')));
     }
   }
 
@@ -80,10 +82,7 @@ class _DigitClassificationExampleState extends State<DigitClassificationExample>
         title: const Text('Digit Classification'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.clear),
-            onPressed: _clearDrawing,
-          ),
+          IconButton(icon: const Icon(Icons.clear), onPressed: _clearDrawing),
         ],
       ),
       body: Padding(
@@ -97,10 +96,15 @@ class _DigitClassificationExampleState extends State<DigitClassificationExample>
                   children: [
                     const Text(
                       'MNIST Digit Recognition',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    const Text('Draw a digit (0-9) in the area below and get a prediction.'),
+                    const Text(
+                      'Draw a digit (0-9) in the area below and get a prediction.',
+                    ),
                   ],
                 ),
               ),
@@ -115,7 +119,10 @@ class _DigitClassificationExampleState extends State<DigitClassificationExample>
                     children: [
                       const Text(
                         'Draw Here',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Expanded(
@@ -140,8 +147,16 @@ class _DigitClassificationExampleState extends State<DigitClassificationExample>
                                 });
                               },
                               onPanEnd: (details) {
-                                _drawingPoints.add(_currentPath.map((p) => 
-                                  p != null ? [p.dx, p.dy] : [0.0, 0.0]).expand((x) => x).toList());
+                                _drawingPoints.add(
+                                  _currentPath
+                                      .map(
+                                        (p) => p != null
+                                            ? [p.dx, p.dy]
+                                            : [0.0, 0.0],
+                                      )
+                                      .expand((x) => x)
+                                      .toList(),
+                                );
                                 _currentPath = [];
                                 _classifyDrawing();
                               },
@@ -199,7 +214,10 @@ class _DigitClassificationExampleState extends State<DigitClassificationExample>
                       else ...[
                         const Text(
                           'Prediction',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Container(

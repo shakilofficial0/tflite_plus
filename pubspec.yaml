@@ -1,7 +1,21 @@
 name: tflite_plus
-description: "A new Flutter plugin project."
-version: 0.0.1
-homepage:
+description: A comprehensive Flutter plugin for Google AI's LiteRT (TensorFlow Lite) with advanced machine learning capabilities for both Android and iOS platforms.
+version: 1.0.0
+homepage: https://codebumble.net
+repository: https://github.com/shakilofficial0/tflite_plus
+issue_tracker: https://github.com/shakilofficial0/tflite_plus/issues
+documentation: https://github.com/shakilofficial0/tflite_plus
+
+maintainer: CodeBumble <support@codebumble.net>
+
+topics:
+  - machine-learning
+  - tensorflow
+  - litert
+  - ai
+  - computer-vision
+  - object-detection
+  - image-classification
 
 environment:
   sdk: ^3.9.2
@@ -10,38 +24,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  plugin_platform_interface: ^2.0.2
+  plugin_platform_interface: ^2.1.8
+  image: ^4.1.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  mockito: ^5.4.4
+  build_runner: ^2.4.9
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-  # This section identifies this Flutter project as a plugin project.
-  # The 'pluginClass' specifies the class (in Java, Kotlin, Swift, Objective-C, etc.)
-  # which should be registered in the plugin registry. This is required for
-  # using method channels.
-  # The Android 'package' specifies package in which the registered class is.
-  # This is required for using method channels on Android.
-  # The 'ffiPlugin' specifies that native code should be built and bundled.
-  # This is required for using `dart:ffi`.
-  # All these are used by the tooling to maintain consistency when
-  # adding or updating assets for this project.
   plugin:
     platforms:
-    # This plugin project was generated without specifying any
-    # platforms with the `--platform` argument. If you see the `some_platform` map below, remove it and
-    # then add platforms following the instruction here:
-    # https://flutter.dev/to/pubspec-plugin-platforms
-    # -------------------
-      some_platform:
-        pluginClass: somePluginClass
-    # -------------------
+      android:
+        package: com.codebumble.tflite_plus
+        pluginClass: TflitePlusPlugin
+      ios:
+        pluginClass: TflitePlusPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

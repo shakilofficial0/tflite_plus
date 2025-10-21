@@ -152,7 +152,7 @@ class ByteConversionUtils {
     );
   }
 
-  /// Decodes a TensorFlow string to a List<String>
+  
   static List<String> decodeTFStrings(Uint8List bytes) {
     /// The decoded string
     List<String> decodedStrings = [];

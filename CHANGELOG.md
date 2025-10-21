@@ -1,3 +1,63 @@
+## 1.0.2
+
+### Major API Overhaul - FFI Implementation 🔄
+
+#### Breaking Changes
+- **Complete API Rewrite**: Migrated from high-level method channel API to low-level FFI-based `Interpreter` API
+- **Removed Legacy API**: All `TflitePlus.*` static methods have been removed:
+  - ❌ `TflitePlus.loadModel()`
+  - ❌ `TflitePlus.runModelOnImage()`
+  - ❌ `TflitePlus.detectObjectOnImage()`
+  - ❌ `TflitePlus.runPoseNetOnImage()`
+  - ❌ `TflitePlus.getAvailableDelegates()`
+  - ❌ `TflitePlus.close()`
+
+#### New Features
+- **FFI Interpreter API**: Direct FFI bindings to TensorFlow Lite C++ library
+  - ✅ `Interpreter.fromAsset()` - Load models from Flutter assets
+  - ✅ `Interpreter.fromFile()` - Load models from file system
+  - ✅ `Interpreter.fromBuffer()` - Load models from memory buffer
+  - ✅ `interpreter.run()` - Single input/output inference
+  - ✅ `interpreter.runForMultipleInputs()` - Multi-input/output inference
+  - ✅ `interpreter.invoke()` - Raw inference execution
+- **Hardware Delegates**: Platform-specific acceleration
+  - ✅ `GpuDelegate` (Android)
+  - ✅ `MetalDelegate` (iOS)
+  - ✅ `XNNPackDelegate` (Cross-platform)
+  - ✅ `CoreMLDelegate` (iOS)
+- **InterpreterOptions**: Configuration for threads, delegates, and optimization
+- **Direct Tensor Access**: Low-level tensor manipulation with `Tensor` class
+- **Model Management**: `Model` class for advanced model operations
+
+#### Migration Guide
+```dart
+// Old API (v1.0.0)
+await TflitePlus.loadModel(model: 'model.tflite');
+final results = await TflitePlus.runModelOnImage(path: imagePath);
+
+// New API (v1.0.1+)
+final interpreter = await Interpreter.fromAsset('model.tflite');
+final input = Float32List(inputSize);
+final output = List.filled(outputSize, 0.0);
+interpreter.run(input, output);
+interpreter.close();
+```
+
+#### Improvements
+- **Performance**: Direct FFI calls eliminate method channel overhead
+- **Memory Management**: Explicit resource control with `close()` method
+- **Type Safety**: Strongly typed tensor operations
+- **Lower-level Access**: Full control over inference pipeline
+- **Cross-platform**: Unified API across Android and iOS
+
+#### Developer Experience
+- **Updated Documentation**: All examples updated to new Interpreter API
+- **Complete Examples**: Real-world image classification and batch processing samples
+- **Migration Support**: Clear migration path from legacy API
+- **Error Handling**: Improved exception handling with specific error types
+
+---
+
 ## 1.0.0
 
 ### Initial Release 🎉

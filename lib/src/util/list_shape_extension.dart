@@ -19,7 +19,7 @@ extension ListShape on List {
   ///
   /// [T] is the type of elements in list
   ///
-  /// Returns List<dynamic> if [shape.length] > 5
+  /// Returns List if [shape.length] > 5
   /// else returns list with exact type
   ///
   /// Throws [ArgumentError] if number of elements for [shape]

@@ -633,33 +633,7 @@ We welcome contributions from the community! 🎉
 <br />
 <sub>🚀 Creator & Maintainer</sub>
 </td>
-<td align="center">
-<a href="https://github.com/contributor2">
-<img src="https://github.com/contributor2.png" width="100px;" alt="Contributor 2"/>
-<br />
-<sub><b>Your Name Here</b></sub>
-</a>
-<br />
-<sub>💻 Code Contributor</sub>
-</td>
-<td align="center">
-<a href="https://github.com/contributor3">
-<img src="https://github.com/contributor3.png" width="100px;" alt="Contributor 3"/>
-<br />
-<sub><b>Your Name Here</b></sub>
-</a>
-<br />
-<sub>📖 Documentation</sub>
-</td>
-<td align="center">
-<a href="https://github.com/contributor4">
-<img src="https://github.com/contributor4.png" width="100px;" alt="Contributor 4"/>
-<br />
-<sub><b>Your Name Here</b></sub>
-</a>
-<br />
-<sub>🐛 Bug Reports</sub>
-</td>
+
 </tr>
 </table>
 

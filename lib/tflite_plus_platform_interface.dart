@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'tflite_plus_method_channel.dart';

@@ -1,9 +1,10 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:tflite_plus/tflite_plus.dart';
-import 'package:tflite_plus/tflite_plus_platform_interface.dart';
-import 'package:tflite_plus/tflite_plus_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'dart:typed_data';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:tflite_plus/tflite_plus.dart';
+import 'package:tflite_plus/tflite_plus_method_channel.dart';
+import 'package:tflite_plus/tflite_plus_platform_interface.dart';
 
 class MockTflitePlusPlatform
     with MockPlatformInterfaceMixin

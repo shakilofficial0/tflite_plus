@@ -13,6 +13,7 @@
 [![iOS](https://img.shields.io/badge/iOS-12.0%2B-blue.svg?style=flat-square&logo=apple)](https://developer.apple.com/ios)
 [![GitHub issues](https://img.shields.io/github/issues/shakilofficial0/tflite_plus.svg?style=flat-square)](https://github.com/shakilofficial0/tflite_plus/issues)
 [![GitHub PRs](https://img.shields.io/github/issues-pr/shakilofficial0/tflite_plus.svg?style=flat-square)](https://github.com/shakilofficial0/tflite_plus/pulls)
+![Profile Views](https://visitor-badge.laobi.icu/badge?page_id=shakilofficial0.tflite_plus&right_color=green&left_text=Visitors)
 
 *Bring the power of AI to your Flutter apps with ease* 🚀
 
@@ -716,4 +717,4 @@ SOFTWARE.
 
 </div>
 
-![Profile Views](https://visitor-badge.laobi.icu/badge?page_id=shakilofficial0.tflite_plus)
+

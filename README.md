@@ -113,7 +113,7 @@ interpreter.close();
 
 ```yaml
 dependencies:
-  tflite_plus: ^1.0.2
+  tflite_plus: ^1.0.3
 ```
 
 ### 2. Install
@@ -132,14 +132,14 @@ import 'package:tflite_plus/tflite_plus.dart';
 
 ## ⚙️ Platform Setup
 
-### Android Configuration
+### Android Configuration (Not Mandatory)
 
-Add to `android/app/build.gradle`:
+Add to `android/app/build.gradle`: (Not Mandatory)
 
 ```gradle
 android {
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 21 
     }
 }
 ```

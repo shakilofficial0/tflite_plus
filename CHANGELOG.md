@@ -1,3 +1,41 @@
+## 1.0.3
+
+### Enhanced Documentation & Examples 📚
+
+#### Documentation Improvements
+- **Comprehensive Examples README**: Complete rewrite of `example/README.md` with detailed documentation
+  - ✅ **15+ Example Showcase**: Comprehensive catalog of all available ML examples
+  - ✅ **Feature Matrix**: Detailed comparison of capabilities across Computer Vision, Audio, NLP, and Advanced AI
+  - ✅ **Platform Support**: Clear platform compatibility matrix for all examples
+  - ✅ **Quick Start Guide**: Step-by-step setup instructions with code examples
+  - ✅ **Live Code Samples**: Ready-to-use code snippets for:
+    - Image Classification with MobileNet
+    - Real-time Object Detection with camera streams
+    - Audio Classification with microphone input
+    - Text Classification and sentiment analysis
+    - Proper resource management and error handling
+
+#### Examples Coverage
+- **Computer Vision**: 10 examples (Image Classification, Object Detection, Pose Estimation, Segmentation, Style Transfer, etc.)
+- **Audio Processing**: YAMNet audio classification with live stream support
+- **Natural Language Processing**: Text classification and BERT Q&A examples
+- **Advanced AI**: Reinforcement learning and gesture recognition demos
+
+#### Developer Experience
+- **Setup Instructions**: Detailed platform-specific configuration guides
+- **Troubleshooting Section**: Common issues and solutions
+- **Best Practices**: Performance optimization and resource management tips
+- **Contributing Guidelines**: Clear instructions for adding new examples
+- **Learning Resources**: Educational content for ML concepts and implementation patterns
+
+#### Technical Details
+- **Cross-Platform Support**: Updated compatibility information for Android, iOS, and Desktop platforms
+- **Hardware Acceleration**: Documented GPU, NNAPI, Metal, and CoreML delegate usage
+- **Model Management**: Guidelines for downloading and managing TensorFlow Lite models
+- **Performance Optimization**: Memory usage and inference speed optimization techniques
+
+---
+
 ## 1.0.2
 
 ### Major API Overhaul - FFI Implementation 🔄

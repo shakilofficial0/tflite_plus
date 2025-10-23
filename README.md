@@ -715,3 +715,5 @@ SOFTWARE.
 [![Star on GitHub](https://img.shields.io/github/stars/shakilofficial0/tflite_plus.svg?style=social)](https://github.com/shakilofficial0/tflite_plus/stargazers)
 
 </div>
+
+![Profile Views](https://visitor-badge.laobi.icu/badge?page_id=shakilofficial0.tflite_plus)

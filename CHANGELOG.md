@@ -1,3 +1,23 @@
+## 1.0.4
+
+### Static Analysis & Example App Fixes 🧹
+
+#### `flutter analyze` Clean-up
+- **324 → 0 issues**: Resolved every warning/error reported by `flutter analyze` across the plugin and all 14 bundled example apps
+- **Plugin lints**: Removed the unnecessary named `library` directive and escaped a stray `List<dynamic>` doc-comment that was being parsed as HTML
+- **Deprecated API usage**: Replaced `Color.withOpacity()` with `Color.withValues(alpha: ...)` across 11 example apps
+- **Missing type annotations**: Added explicit parameter types in the `reinforcement_learning` example
+
+#### Example App Fixes
+- **Broken dependency**: `object_detection_ssd_mobilenet_v2` pointed at a nonexistent `tflite_plus: ^0.10.4` on pub.dev; switched to a local `path` dependency like every other example
+- **Version conflict**: `digit_classification` pinned `image: 4.0.17`, which conflicted with the plugin's own `image: ^4.1.7` requirement and blocked `pub get` entirely
+- **`.gitignore` bug**: the negation patterns meant to keep placeholder `assets/models/.gitkeep` and `README.md` files tracked were missing their `!` prefix, so those directories could never actually ship; fixed the patterns and added the missing placeholders
+
+#### Dependencies
+- Bumped `ffigen` dev dependency to `^21.0.0`
+
+---
+
 ## 1.0.3
 
 ### Enhanced Documentation & Examples 📚

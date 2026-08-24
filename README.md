@@ -114,7 +114,7 @@ interpreter.close();
 
 ```yaml
 dependencies:
-  tflite_plus: ^1.0.3
+  tflite_plus: ^1.0.4
 ```
 
 ### 2. Install

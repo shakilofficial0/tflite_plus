@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 /// TensorFlow Lite for Flutter
-library tflite_plus;
+library;
 
 import 'package:ffi/ffi.dart';
 import 'package:tflite_plus/src/bindings/bindings.dart';

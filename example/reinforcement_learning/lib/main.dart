@@ -259,7 +259,7 @@ class _PlaneStrikeState extends State<PlaneStrike> {
     return false;
   }
 
-  void _gridItemTapped(context, x, y) {
+  void _gridItemTapped(BuildContext context, int x, int y) {
     if (_agentBoardState[x][y] != 0) {
       return;
     }

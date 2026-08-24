@@ -155,7 +155,7 @@ extension ListShape on List {
   }
 
   /// Flatten this list, [T] is element type
-  /// if not specified List<dynamic> is returned
+  /// if not specified `List<dynamic>` is returned
   List<T> flatten<T>() {
     var flat = <T>[];
     forEach((e) {
